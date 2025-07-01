@@ -22,6 +22,7 @@ public:
 	~UIButton();
 
 	void Init(void);	// ‰Šú‰»
+	void Load(void);	// “Ç‚İ‚İ
 	void Update(void);	// XV
 	void Draw(void);	// •`‰æ
 	void Delete(void);	// íœ

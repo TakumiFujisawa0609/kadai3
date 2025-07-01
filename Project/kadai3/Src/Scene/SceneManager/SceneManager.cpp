@@ -75,13 +75,12 @@ void SceneManager::Update(void)
 			// ロード後の初期化
 			scene_->LoadEnd();
 		}
-		// 通常の更新処理
-		else
-		{
-
-			// 現在のシーンの更新
-			scene_->Update();
-		}
+	}		
+	// 通常の更新処理
+	else
+	{
+		// 現在のシーンの更新
+		scene_->Update();
 	}
 }
 

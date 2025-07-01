@@ -1,6 +1,9 @@
 #pragma once
 #include "../SceneBase.h"
 
+// クラスの前方宣言
+class UIButton;
+
 // ベースを継承
 class TitleScene : public SceneBase
 {
@@ -22,4 +25,5 @@ public:
 
 private:
 	int handle_;
+	UIButton *button_;
 };

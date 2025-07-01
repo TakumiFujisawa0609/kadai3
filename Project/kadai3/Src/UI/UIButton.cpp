@@ -20,6 +20,10 @@ UIButton::~UIButton()
 
 void UIButton::Init(void)
 {
+}
+
+void UIButton::Load(void)
+{
 	handle_[(int)BUTTON_STATE::DEFAULT] = LoadGraph("Data/Image/Button/s_001.png");
 	handle_[(int)BUTTON_STATE::HOVER] = LoadGraph("Data/Image/Button/s_001_hover.png");
 	handle_[(int)BUTTON_STATE::DISABLED] = LoadGraph("Data/Image/Button/s_001_click.png");
