@@ -7,6 +7,7 @@ enum class BUTTON_STATE
 	DEFAULT,	// 通常
 	HOVER,		// クリック可能
 	DISABLED,	// クリック不可
+	AFTER_CLICK,// クリック後
 
 	BUTTON_STATE_MAX,	// 状態の最大数
 };

@@ -2,6 +2,7 @@
 
 #include <DxLib.h>
 #include "../Collision/Collision.h"
+#include "../Input/InputManager.h"
 
 UIButton::UIButton(int posX, int posY, int sizeW, int sizeH)
 {
@@ -47,10 +48,16 @@ void UIButton::Update(void)
 		buttonState_ = BUTTON_STATE::HOVER;
 
 		// クリックされているのか？
-		if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
+		if (InputManager::GetInstance()->IsClickMouseLeft())
 		{
 			// クリックされている
 			buttonState_ = BUTTON_STATE::DISABLED;
+		}
+
+		// マウスが範囲内で離された
+		if (InputManager::GetInstance()->IsTrgUpMouseLeft())
+		{
+			buttonState_ = BUTTON_STATE::AFTER_CLICK;
 		}
 	}
 }

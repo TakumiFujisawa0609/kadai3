@@ -3,6 +3,8 @@
 #include "TitleScene.h"
 #include "../../Application/Application.h"
 #include "../../UI/UIButton.h"
+#include "../../Input/InputManager.h"
+#include "../../Scene/SceneManager/SceneManager.h"
 
 // コンストラクタ
 TitleScene::TitleScene(void)
@@ -25,7 +27,7 @@ void TitleScene::Load(void)
 	// ボタン作成
 	button_ = new UIButton(
 		Application::SCREEN_SIZE_X / 2,
-		Application::SCREEN_SIZE_Y / 2,
+		Application::SCREEN_SIZE_Y / 2 + 240,
 		258,
 		88
 	);
@@ -45,6 +47,9 @@ void TitleScene::LoadEnd(void)
 void TitleScene::Update(void)
 {
 	button_->Update();
+
+	// 次のシーンへ遷移する関数
+	toNextScene();
 }
 
 // 描画
@@ -71,4 +76,11 @@ void TitleScene::Release(void)
 // 次のシーンへ遷移
 void TitleScene::toNextScene(void)
 {
+	// シーン遷移
+	// スペースキーを押す もしくは ボタンをクリックをすると遷移する！
+	if (InputManager::GetInstance()->IsNew(KEY_INPUT_SPACE) ||
+		button_->GetButtonState() == BUTTON_STATE::AFTER_CLICK)
+	{
+		SceneManager::GetInstance()->ChangeScene(SceneManager::SCENE_ID::GAME);
+	}
 }
