@@ -1,6 +1,8 @@
 #include <DxLib.h>
 #include "Application.h"
 #include "../FpsControl/FpsControl.h"
+#include "../Input/InputManager.h"
+#include "../Scene/SceneManager/SceneManager.h"
 
 Application* Application::instance_ = nullptr;
 
@@ -42,6 +44,12 @@ void Application::Init(void)
 
 	// キー制御初期化
 	SetUseDirectInputFlag(true);
+	InputManager::CreateInstance();
+	InputManager::GetInstance()->Init();
+
+	// シーン管理初期化
+	SceneManager::CreateInstance();
+	SceneManager::GetInstance()->Init();
 
 	// FPS初期化
 	fps_ = new FpsControl;
@@ -51,9 +59,6 @@ void Application::Init(void)
 // ゲームループ
 void Application::Run(void)
 {
-	//TitleEdit editor;
-	//editor.Init();
-
 	// ゲームループ
 	while (ProcessMessage() == 0)
 	{
@@ -67,6 +72,10 @@ void Application::Run(void)
 		// 画面を初期化
 		ClearDrawScreen();
 
+		InputManager::GetInstance()->Update();	// 入力制御更新
+		SceneManager::GetInstance()->Update();	// シーン管理更新
+		SceneManager::GetInstance()->Draw();	// シーン管理描画
+
 		fps_->CalcFrameRate();	// フレームレート計算
 		fps_->DrawFrameRate();	// フレームレート描画
 
@@ -77,6 +86,13 @@ void Application::Run(void)
 // 解放
 void Application::Release(void)
 {
+	// 入力制御削除
+	InputManager::GetInstance()->DeleteInstance();
+
+	// シーン管理解放・削除
+	SceneManager::GetInstance()->Release();
+	SceneManager::GetInstance()->DeleteInstance();
+
 	// フレームレート解放
 	delete fps_;
 

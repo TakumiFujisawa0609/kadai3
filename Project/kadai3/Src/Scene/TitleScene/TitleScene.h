@@ -21,4 +21,5 @@ public:
 	void toNextScene(void);			// Ÿ‚ÌƒV[ƒ“‚Ö
 
 private:
+	int handle_;
 };
