@@ -21,6 +21,9 @@ public:
 	// カメラスピード(移動)
 	static constexpr float MOVE_SPEED = 10.0f;
 
+	// カメラスピード(度)
+	static constexpr float ANGLE_SPEED = 1.0f;
+
 	Camera(void);
 	~Camera(void);
 

@@ -19,16 +19,22 @@ void Camera::Update(void)
 {
 	// ˆÚ“®•ûŒü‚ðŒˆ‚ß‚é
 	VECTOR moveDir = AsoUtility::VECTOR_ZERO;
-	if (InputManager::GetInstance()->IsNew(KEY_INPUT_UP))	{ moveDir = AsoUtility::DIR_F; }
-	if (InputManager::GetInstance()->IsNew(KEY_INPUT_DOWN))	{ moveDir = AsoUtility::DIR_B; }
-	if (InputManager::GetInstance()->IsNew(KEY_INPUT_LEFT))	{ moveDir = AsoUtility::DIR_L; }
-	if (InputManager::GetInstance()->IsNew(KEY_INPUT_RIGHT)){ moveDir = AsoUtility::DIR_R; }
+	if (InputManager::GetInstance()->IsNew(KEY_INPUT_I)){ moveDir = AsoUtility::DIR_F; }
+	if (InputManager::GetInstance()->IsNew(KEY_INPUT_K)){ moveDir = AsoUtility::DIR_B; }
+	if (InputManager::GetInstance()->IsNew(KEY_INPUT_J)){ moveDir = AsoUtility::DIR_L; }
+	if (InputManager::GetInstance()->IsNew(KEY_INPUT_L)){ moveDir = AsoUtility::DIR_R; }
 
 	// ˆÚ“®—Ê‚ðŒvŽZ‚·‚é(•ûŒü~ƒXƒs[ƒh)
 	VECTOR movePow = VScale(moveDir, MOVE_SPEED);
 
 	// ˆÚ“®ˆ—(À•W{ˆÚ“®—Ê)
 	pos_ = VAdd(pos_, movePow);
+	
+	// XŽ²‚ÌŠp“x’²®
+	float anglePowRad = AsoUtility::Deg2RadF(ANGLE_SPEED);
+	if (InputManager::GetInstance()->IsNew(KEY_INPUT_U)) { angle_.x += anglePowRad; }
+	if (InputManager::GetInstance()->IsNew(KEY_INPUT_O)) { angle_.x -= anglePowRad; }
+
 }
 
 void Camera::SetBeforeDraw(void)
