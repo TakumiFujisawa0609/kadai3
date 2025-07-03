@@ -1,9 +1,10 @@
 #include "Camera.h"
+#include "../Input/InputManager.h"
+#include "../Utility/AsoUtility.h"
 
 Camera::Camera(void)
 {
 }
-
 Camera::~Camera(void)
 {
 }
@@ -16,6 +17,18 @@ void Camera::Init(void)
 
 void Camera::Update(void)
 {
+	// 移動方向を決める
+	VECTOR moveDir = AsoUtility::VECTOR_ZERO;
+	if (InputManager::GetInstance()->IsNew(KEY_INPUT_UP))	{ moveDir = AsoUtility::DIR_F; }
+	if (InputManager::GetInstance()->IsNew(KEY_INPUT_DOWN))	{ moveDir = AsoUtility::DIR_B; }
+	if (InputManager::GetInstance()->IsNew(KEY_INPUT_LEFT))	{ moveDir = AsoUtility::DIR_L; }
+	if (InputManager::GetInstance()->IsNew(KEY_INPUT_RIGHT)){ moveDir = AsoUtility::DIR_R; }
+
+	// 移動量を計算する(方向×スピード)
+	VECTOR movePow = VScale(moveDir, MOVE_SPEED);
+
+	// 移動処理(座標＋移動量)
+	pos_ = VAdd(pos_, movePow);
 }
 
 void Camera::SetBeforeDraw(void)

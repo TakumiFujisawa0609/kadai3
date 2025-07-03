@@ -18,6 +18,9 @@ public:
 	// カメラクリップ：FAR
 	static constexpr float CAMERA_FAR = 5000.0f;
 
+	// カメラスピード(移動)
+	static constexpr float MOVE_SPEED = 10.0f;
+
 	Camera(void);
 	~Camera(void);
 
