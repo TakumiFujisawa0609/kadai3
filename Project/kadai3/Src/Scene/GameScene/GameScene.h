@@ -1,6 +1,10 @@
 #pragma once
 #include "../SceneBase.h"
 
+// 前方宣言
+class Grid;
+class Camera;
+
 // ベースを継承
 class GameScene : public SceneBase
 {
@@ -18,4 +22,6 @@ public:
 	void Release(void)	override;	// 解放
 
 private:
+	Grid* grid_;		// グリッドクラス(デバッグ用)
+	Camera* camera_;	// カメラクラス
 };

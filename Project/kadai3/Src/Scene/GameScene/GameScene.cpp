@@ -1,5 +1,7 @@
 #include <DxLib.h>
 #include "GameScene.h"
+#include "../../Object/Grid/Grid.h"
+#include "../../Camera/Camera.h"
 
 // コンストラクタ
 GameScene::GameScene()
@@ -14,11 +16,21 @@ GameScene::~GameScene()
 // 初期化
 void GameScene::Init(void)
 {
+	// グリッド初期化
+	grid_->Init();
+
+	// カメラ初期化
+	camera_->Init();
 }
 
 // 読み込み
 void GameScene::Load(void)
 {
+	// グリッドの生成
+	grid_ = new Grid();
+
+	// カメラの生成
+	camera_ = new Camera();
 }
 
 // 読み込み後の初期化
@@ -31,14 +43,32 @@ void GameScene::LoadEnd(void)
 // 更新
 void GameScene::Update(void)
 {
+	// グリッド更新
+	grid_->Update();
+
+	// カメラ更新
+	camera_->Update();
 }
 
 // 描画
 void GameScene::Draw(void)
 {
+	// グリッド描画
+	grid_->Draw();
+
+	// カメラ描画
+	camera_->SetBeforeDraw();
+	camera_->DrawDebug();
 }
 
 // 解放
 void GameScene::Release(void)
 {
+	// グリッド解放
+	grid_->Release();
+	delete grid_;
+
+	// カメラ解放
+	camera_->Release();
+	delete camera_;
 }
