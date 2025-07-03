@@ -2,6 +2,7 @@
 #include "GameScene.h"
 #include "../../Object/Grid/Grid.h"
 #include "../../Camera/Camera.h"
+#include "../../Object/Stage/Stage.h"
 
 // コンストラクタ
 GameScene::GameScene()
@@ -21,6 +22,9 @@ void GameScene::Init(void)
 
 	// カメラ初期化
 	camera_->Init();
+
+	// ステージ初期化
+	stage_->Init();
 }
 
 // 読み込み
@@ -31,6 +35,10 @@ void GameScene::Load(void)
 
 	// カメラの生成
 	camera_ = new Camera();
+
+	// ステージの生成
+	stage_ = new Stage();
+	stage_->Load();
 }
 
 // 読み込み後の初期化
@@ -48,6 +56,9 @@ void GameScene::Update(void)
 
 	// カメラ更新
 	camera_->Update();
+
+	// ステージ更新
+	stage_->Update();
 }
 
 // 描画
@@ -59,6 +70,9 @@ void GameScene::Draw(void)
 	// カメラ描画
 	camera_->SetBeforeDraw();
 	camera_->DrawDebug();
+
+	// ステージ描画
+	stage_->Draw();
 }
 
 // 解放
@@ -71,4 +85,8 @@ void GameScene::Release(void)
 	// カメラ解放
 	camera_->Release();
 	delete camera_;
+
+	// ステージ解放
+	stage_->Release();
+	delete stage_;
 }

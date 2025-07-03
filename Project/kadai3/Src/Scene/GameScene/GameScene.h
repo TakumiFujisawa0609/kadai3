@@ -4,6 +4,7 @@
 // 前方宣言
 class Grid;
 class Camera;
+class Stage;
 
 // ベースを継承
 class GameScene : public SceneBase
@@ -24,4 +25,6 @@ public:
 private:
 	Grid* grid_;		// グリッドクラス(デバッグ用)
 	Camera* camera_;	// カメラクラス
+
+	Stage* stage_;		// ステージ管理
 };
