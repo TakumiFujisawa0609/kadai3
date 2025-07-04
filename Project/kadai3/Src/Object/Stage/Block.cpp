@@ -14,7 +14,7 @@ void Block::Create(TYPE type, int baseModelId, int mapX, int mapZ)
 	// ブロックの種類
 	type_ = type;
 
-	// モデルのハンドルID
+	// オリジナルモデルを複製する。
 	modelId_ = MV1DuplicateModel(baseModelId);
 
 	// 色の調整(自己発光)
@@ -22,6 +22,10 @@ void Block::Create(TYPE type, int baseModelId, int mapX, int mapZ)
 
 	// 1ブロックあたりの半分の大きさ
 	const float SIZE_HALF_BLOCK = (SIZE / 2.0f);
+
+	// 大きさ設定
+	scale_ = SCALE;
+	MV1SetScale(modelId_, scale_);
 
 	// 引数で指定されたマップ座標から座標を計算する
 	// 今回の３Ｄモデルの中心座標は、ブロックの中心に位置する
@@ -36,11 +40,6 @@ void Block::Create(TYPE type, int baseModelId, int mapX, int mapZ)
 	// 座標設定
 	pos_ = pos;
 	MV1SetPosition(modelId_, pos_);
-
-	// 大きさ設定
-	scale_ = SCALE;
-	MV1SetScale(modelId_, scale_);
-
 }
 
 void Block::Update(void)

@@ -9,8 +9,7 @@ public:
 	static constexpr COLOR_F EMI_COLOR = { 0.5f, 0.5f, 0.5f, 1.0f };
 
 	// ブロックモデルの大きさ
-	//static constexpr VECTOR SCALES = { 0.5f, 0.5f, 0.5f };
-	static constexpr VECTOR SCALE = { 0.51f, 0.51f, 0.51f };
+	static constexpr VECTOR SCALE = { 0.5f, 0.5f, 0.5f };
 
 	// 1ブロックあたりのサイズ
 	static constexpr float SIZE = 100.0f;
