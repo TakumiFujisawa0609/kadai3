@@ -53,5 +53,4 @@ private:
 
 	// ‘å‚«‚³
 	VECTOR scale_;
-
 };

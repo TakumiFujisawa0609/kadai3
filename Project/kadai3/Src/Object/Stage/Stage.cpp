@@ -46,6 +46,8 @@ void Stage::Load(void)
 
 void Stage::LoadEnd(void)
 {
+	// ‰Šú‰»
+	Init();
 }
 
 void Stage::Update(void)
@@ -54,7 +56,6 @@ void Stage::Update(void)
 
 void Stage::Draw(void)
 {
-
 	// ƒ}ƒbƒv‚Ì•`‰æ
 	for (int y = 0; y < BLOCK_NUM_Z; y++)
 	{
@@ -63,7 +64,6 @@ void Stage::Draw(void)
 			blocks_[y][x]->Draw();
 		}
 	}
-
 }
 
 void Stage::Release(void)
