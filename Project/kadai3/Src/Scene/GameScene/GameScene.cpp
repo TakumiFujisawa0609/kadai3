@@ -3,6 +3,7 @@
 #include "../../Object/Grid/Grid.h"
 #include "../../Camera/Camera.h"
 #include "../../Object/Stage/Stage.h"
+#include "../../Object/Player/Player.h"
 
 // コンストラクタ
 GameScene::GameScene()
@@ -25,6 +26,9 @@ void GameScene::Init(void)
 
 	// ステージ初期化
 	stage_->Init();
+
+	// プレイヤーの初期化
+	player_->Init();
 }
 
 // 読み込み
@@ -39,6 +43,10 @@ void GameScene::Load(void)
 	// ステージの生成
 	stage_ = new Stage();
 	stage_->Load();
+
+	// プレイヤーの生成
+	player_ = new Player();
+	player_->Load();
 }
 
 // 読み込み後の初期化
@@ -46,6 +54,9 @@ void GameScene::LoadEnd(void)
 {
 	// 初期化
 	Init();
+
+	stage_->LoadEnd();
+	player_->LoadEnd();
 }
 
 // 更新
@@ -59,6 +70,9 @@ void GameScene::Update(void)
 
 	// ステージ更新
 	stage_->Update();
+
+	// プレイヤーの更新
+	player_->Update();
 }
 
 // 描画
@@ -73,6 +87,9 @@ void GameScene::Draw(void)
 
 	// ステージ描画
 	stage_->Draw();
+
+	// プレイヤーの描画
+	player_->Draw();
 }
 
 // 解放
@@ -89,4 +106,8 @@ void GameScene::Release(void)
 	// ステージ解放
 	stage_->Release();
 	delete stage_;
+
+	// プレイヤーの解放
+	player_->Release();
+	delete player_;
 }

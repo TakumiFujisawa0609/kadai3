@@ -5,6 +5,7 @@
 class Grid;
 class Camera;
 class Stage;
+class Player;
 
 // ベースを継承
 class GameScene : public SceneBase
@@ -27,4 +28,5 @@ private:
 	Camera* camera_;	// カメラクラス
 
 	Stage* stage_;		// ステージ管理
+	Player* player_;	// プレイヤー
 };
