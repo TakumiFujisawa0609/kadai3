@@ -1,6 +1,9 @@
 #include <string>
 #include "Block.h"
 #include "Stage.h"
+#include <fstream>
+#include "../../Utility/AsoUtility.h"
+#include "../../Application/Application.h"
 
 Stage::Stage(void)
 {
@@ -24,24 +27,8 @@ void Stage::Load(void)
 	blockOriginModelId_[static_cast<int>(Block::TYPE::ICE)]
 		= MV1LoadModel("Data/Model/Blocks/Block_Ice.mv1");
 
-	for (int z = 0; z < BLOCK_NUM_Z; z++)
-	{
-		for (int x = 0; x < BLOCK_NUM_X; x++)
-		{
-			int chipNo = mapData_[z][x];
-
-			Block::TYPE type = static_cast<Block::TYPE>(chipNo);
-
-			int baseModelId = blockOriginModelId_[chipNo];
-
-			// ブロックを生成
-			Block* block = new Block();
-			block->Create(type, baseModelId, x, z);
-
-			// ２次元配列にブロックを格納			
-			blocks_[z][x] = block;
-		}
-	}
+	// マップ読み込み
+	LoadMapCsvData();
 }
 
 void Stage::LoadEnd(void)
@@ -75,3 +62,44 @@ void Stage::Release(void)
 	}
 }
 
+void Stage::LoadMapCsvData(void)
+{
+	// ファイルの読込
+	std::ifstream ifs = std::ifstream("Data/MapData/MapData.csv");
+	if (!ifs)
+	{
+		// エラーが発生
+		return;
+	}
+
+	// ファイルを１行ずつ読み込む
+	std::string line;					// 1行の文字情報
+	std::vector<std::string> strSplit;	// 1行を1文字の動的配列に分割
+	int chipNo = 0;
+	int z = 0;
+
+	while (getline(ifs, line))
+	{
+		// １行をカンマ区切りで分割
+		strSplit = AsoUtility::Split(line, ',');
+
+		for (int x = 0; x < strSplit.size(); x++) 
+		{
+			// stringからintに変換
+			chipNo = stoi(strSplit[x]);
+
+			Block::TYPE type = static_cast<Block::TYPE>(chipNo);
+
+			int baseModelId = blockOriginModelId_[chipNo];
+
+			// ブロックを生成
+			Block* block = new Block();
+			block->Create(type, baseModelId, x, z);
+
+			// ２次元配列にブロックを格納			
+			blocks_[z][x] = block;
+		}
+
+		z++;
+	}
+}

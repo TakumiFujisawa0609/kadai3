@@ -13,8 +13,8 @@ public:
 	static constexpr int BLOCK_MODEL_NUM = static_cast<int>(Block::TYPE::MAX);
 
 	// ブロックの数(マップのサイズ)
-	static constexpr int BLOCK_NUM_X = 5;
-	static constexpr int BLOCK_NUM_Z = 5;
+	static constexpr int BLOCK_NUM_X = 20;
+	static constexpr int BLOCK_NUM_Z = 20;
 
 	// コンストラクタ
 	Stage(void);
@@ -30,19 +30,12 @@ public:
 	void Release(void);
 
 private:
+	// マップデータ
+	void LoadMapCsvData(void);
 
+private:
 	// ブロックのオリジナルハンドル
 	int blockOriginModelId_[BLOCK_MODEL_NUM];
-
-	// マップデータ
-	int mapData_[BLOCK_NUM_Z][BLOCK_NUM_X] =
-	{
-		{ 1, 1, 1, 1, 1 },
-		{ 1, 0, 0, 0, 1 },
-		{ 1, 0, 0, 0, 1 },
-		{ 1, 0, 0, 0, 1 },
-		{ 1, 1, 1, 1, 1 }
-	};
 
 	// ブロッククラス格納用
 	Block* blocks_[BLOCK_NUM_Z][BLOCK_NUM_X];
