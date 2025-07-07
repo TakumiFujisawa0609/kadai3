@@ -1,4 +1,6 @@
 #include "Player.h"
+#include "../../Utility/AsoUtility.h"
+#include "../../Input/InputManager.h"
 
 Player::Player(void)
 {
@@ -36,6 +38,8 @@ void Player::LoadEnd(void)
 
 void Player::Update(void)
 {
+	// 移動操作
+	ProcessMove();
 }
 
 void Player::Draw(void)
@@ -48,4 +52,44 @@ void Player::Release(void)
 {
 	// モデルの削除
 	MV1DeleteModel(modelId_);
+}
+
+void Player::ProcessMove(void)
+{
+	// 移動方向を決める
+	VECTOR moveDir = AsoUtility::VECTOR_ZERO;
+
+	// 上移動
+	if (InputManager::GetInstance()->IsNew(KEY_INPUT_W))
+	{
+		moveDir = AsoUtility::DIR_F;
+	}
+	// 下移動
+	if (InputManager::GetInstance()->IsNew(KEY_INPUT_S))
+	{
+		moveDir = AsoUtility::DIR_B;
+	}
+	// 左移動
+	if (InputManager::GetInstance()->IsNew(KEY_INPUT_A))
+	{
+		moveDir = AsoUtility::DIR_L;
+	}
+	// 右移動
+	if (InputManager::GetInstance()->IsNew(KEY_INPUT_D))
+	{
+		moveDir = AsoUtility::DIR_R;
+	}
+
+	// 移動していたら
+	if (!AsoUtility::EqualsVZero(moveDir))
+	{
+		// 移動量を計算する(方向×スピード)
+		VECTOR movePow = VScale(moveDir, MOVE_SPEED);
+
+		// 移動処理(座標＋移動量)
+		pos_ = VAdd(pos_, movePow);
+
+		// モデルに座標を設定する
+		MV1SetPosition(modelId_, pos_);
+	}
 }

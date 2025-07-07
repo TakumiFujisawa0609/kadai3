@@ -13,6 +13,9 @@ public:
 	// 標準の自己発光色
 	static constexpr COLOR_F EMI_COLOR = { 0.5f, 0.5f, 0.5f, 0.5f };
 
+	// 移動スピード
+	static constexpr float MOVE_SPEED = 10.0f;
+
 	// コンストラクタ
 	Player(void);
 
@@ -25,6 +28,10 @@ public:
 	void Update(void);
 	void Draw(void);
 	void Release(void);
+
+private:
+	// 移動制御
+	void ProcessMove(void);
 
 private:
 		
