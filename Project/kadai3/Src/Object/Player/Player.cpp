@@ -16,6 +16,10 @@ void Player::Init(void)
 	scale_ = SCALE;
 	MV1SetScale(modelId_, scale_);
 
+	// モデルの角度
+	angle_ = { 0.0f, 0.0f , 0.0f };
+	MV1SetRotationXYZ(modelId_, angle_);
+
 	// モデルの座標
 	pos_ = INIT_POS;
 	MV1SetPosition(modelId_, pos_);
@@ -83,6 +87,16 @@ void Player::ProcessMove(void)
 	// 移動していたら
 	if (!AsoUtility::EqualsVZero(moveDir))
 	{
+		// モデルの移動方向にY軸回転させる
+		// 方向を角度(ラジアン)に変換する
+		angle_.y = atan2(moveDir.x, moveDir.z);
+
+		// モデルがZのマイナス方向を向いているので回転させる
+		angle_.y += AsoUtility::Deg2RadF(180.0f);
+
+		// モデルに回転を設定する
+		MV1SetRotationXYZ(modelId_, angle_);
+
 		// 移動量を計算する(方向×スピード)
 		VECTOR movePow = VScale(moveDir, MOVE_SPEED);
 
