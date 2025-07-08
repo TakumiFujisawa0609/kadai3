@@ -128,6 +128,12 @@ void Player::UpdateAnim(void)
 	// アニメーションを進める
 	nowAnimTime_ += 1.0f;
 
+	// アニメーションをループ
+	if (nowAnimTime_ > totalAnimTime_)
+	{
+		nowAnimTime_ = 0.0f;
+	}
+
 	// アニメーション設定
 	MV1SetAttachAnimTime(modelId_, attachNo_, nowAnimTime_);
 }
