@@ -33,10 +33,18 @@ private:
 	// 移動制御
 	void ProcessMove(void);
 
+	// アニメーション再生
+	void UpdateAnim(void);
+
 private:
 		
 	int modelId_;	// モデルのハンドルID
 	VECTOR pos_;	// 座標
 	VECTOR angle_;	// 向き
 	VECTOR scale_;	// 大きさ
+
+	// アニメーション
+	int attachNo_;			// アタッチNo
+	float nowAnimTime_;		// 再生中の時間
+	float totalAnimTime_;	// 総再生時間
 };

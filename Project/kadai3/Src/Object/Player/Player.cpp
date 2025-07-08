@@ -26,6 +26,11 @@ void Player::Init(void)
 
 	// モデルの色調整(自己発光)
 	MV1SetMaterialEmiColor(modelId_, 0, EMI_COLOR);
+
+	// アニメーション
+	attachNo_ = 0;		
+	nowAnimTime_ = 0.0f;	
+	totalAnimTime_ = 0.0f;
 }
 
 void Player::Load(void)
@@ -38,12 +43,22 @@ void Player::LoadEnd(void)
 {
 	// 初期化
 	Init();
+
+	// アニメーション初期化(読み込み後)
+	// Walkアニメーションをアタッチする
+	attachNo_ = MV1AttachAnim(modelId_, 14);
+
+	// アニメーションの総再生時間を取得
+	totalAnimTime_ = MV1GetAttachAnimTotalTime(modelId_, attachNo_);
 }
 
 void Player::Update(void)
 {
 	// 移動操作
 	ProcessMove();
+
+	// アニメーションの更新
+	UpdateAnim();
 }
 
 void Player::Draw(void)
@@ -106,4 +121,13 @@ void Player::ProcessMove(void)
 		// モデルに座標を設定する
 		MV1SetPosition(modelId_, pos_);
 	}
+}
+
+void Player::UpdateAnim(void)
+{
+	// アニメーションを進める
+	nowAnimTime_ += 1.0f;
+
+	// アニメーション設定
+	MV1SetAttachAnimTime(modelId_, attachNo_, nowAnimTime_);
 }
