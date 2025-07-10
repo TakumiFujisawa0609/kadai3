@@ -22,7 +22,7 @@ void GameScene::Init(void)
 	grid_->Init();
 
 	// カメラ初期化
-	camera_->Init();
+	Camera::GetInstance()->Init();
 
 	// ステージ初期化
 	stage_->Init();
@@ -38,7 +38,7 @@ void GameScene::Load(void)
 	grid_ = new Grid();
 
 	// カメラの生成
-	camera_ = new Camera();
+	Camera::CreateInstance();
 
 	// ステージの生成
 	stage_ = new Stage();
@@ -66,7 +66,7 @@ void GameScene::Update(void)
 	grid_->Update();
 
 	// カメラ更新
-	camera_->Update();
+	Camera::GetInstance()->Update();
 
 	// ステージ更新
 	stage_->Update();
@@ -82,8 +82,8 @@ void GameScene::Draw(void)
 	grid_->Draw();
 
 	// カメラ描画
-	camera_->SetBeforeDraw();
-	camera_->DrawDebug();
+	Camera::GetInstance()->SetBeforeDraw();
+	Camera::GetInstance()->DrawDebug();
 
 	// ステージ描画
 	stage_->Draw();
@@ -100,8 +100,8 @@ void GameScene::Release(void)
 	delete grid_;
 
 	// カメラ解放
-	camera_->Release();
-	delete camera_;
+	Camera::GetInstance()->Release();
+	Camera::DeleteInstance();
 
 	// ステージ解放
 	stage_->Release();

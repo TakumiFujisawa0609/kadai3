@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "../../Utility/AsoUtility.h"
 #include "../../Input/InputManager.h"
+#include "../../Camera/Camera.h"
 
 Player::Player(void)
 {
@@ -61,6 +62,9 @@ void Player::Update(void)
 
 	// アニメーションの更新
 	UpdateAnim();
+
+	// カメラに自身の座標を渡す
+	Camera::GetInstance()->SetFollowPos(pos_);
 }
 
 void Player::Draw(void)
