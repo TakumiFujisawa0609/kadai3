@@ -28,8 +28,10 @@ void Player::Init(void)
 	MV1SetMaterialEmiColor(modelId_, 0, EMI_COLOR);
 
 	// アニメーション
-	attachNo_ = 0;		
-	nowAnimTime_ = 0.0f;	
+	prevAnimType_ = ANIM_TYPE::IDEL;
+	nowAnimType_ = ANIM_TYPE::IDEL;
+	attachNo_ = 0;
+	nowAnimTime_ = 0.0f;
 	totalAnimTime_ = 0.0f;
 }
 
@@ -46,7 +48,7 @@ void Player::LoadEnd(void)
 
 	// アニメーション初期化(読み込み後)
 	// Walkアニメーションをアタッチする
-	attachNo_ = MV1AttachAnim(modelId_, 14);
+	attachNo_ = MV1AttachAnim(modelId_, static_cast<int>(nowAnimType_));
 
 	// アニメーションの総再生時間を取得
 	totalAnimTime_ = MV1GetAttachAnimTotalTime(modelId_, attachNo_);
@@ -120,11 +122,36 @@ void Player::ProcessMove(void)
 
 		// モデルに座標を設定する
 		MV1SetPosition(modelId_, pos_);
+
+		// アニメーションを変更する
+		nowAnimType_ = ANIM_TYPE::WALK;
+	}
+	// 移動していない
+	else
+	{
+		// アニメーションを変更する
+		nowAnimType_ = ANIM_TYPE::IDEL;
 	}
 }
 
 void Player::UpdateAnim(void)
 {
+	// アニメーションが変更された？
+	if (prevAnimType_ != nowAnimType_)
+	{
+		// アニメーション種別を合わせる
+		prevAnimType_ = nowAnimType_;
+
+		// アニメーションを変更する
+		attachNo_ = MV1AttachAnim(modelId_, static_cast<int>(nowAnimType_));
+
+		// アニメーション総時間の取得
+		totalAnimTime_ = MV1GetAttachAnimTotalTime(modelId_, attachNo_);
+
+		// アニメーション時間を初期化
+		nowAnimTime_ = 0.0f;
+	}
+
 	// アニメーションを進める
 	nowAnimTime_ += 1.0f;
 

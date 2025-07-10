@@ -3,6 +3,14 @@
 
 class Player
 {
+public:
+	// アニメーション種別
+	enum class ANIM_TYPE
+	{
+		DEAD = 0,	// 死亡
+		IDEL = 3,	// 待機
+		WALK = 14,	// 歩き
+	};
 
 public:
 
@@ -44,7 +52,10 @@ private:
 	VECTOR scale_;	// 大きさ
 
 	// アニメーション
-	int attachNo_;			// アタッチNo
-	float nowAnimTime_;		// 再生中の時間
-	float totalAnimTime_;	// 総再生時間
+	ANIM_TYPE prevAnimType_;	// 前回のアニメーション種別
+	ANIM_TYPE nowAnimType_;		// 現在のアニメーション種別
+
+	int attachNo_;				// アタッチNo
+	float nowAnimTime_;			// 再生中の時間
+	float totalAnimTime_;		// 総再生時間
 };
