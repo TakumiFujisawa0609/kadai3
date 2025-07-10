@@ -24,6 +24,9 @@ public:
 	// 移動スピード
 	static constexpr float MOVE_SPEED = 10.0f;
 
+	// 重力
+	static constexpr float GRAVITY = 0.8f;
+
 	// コンストラクタ
 	Player(void);
 
@@ -41,6 +44,9 @@ private:
 	// 移動制御
 	void ProcessMove(void);
 
+	// ジャンプ制御
+	void ProcessJump(void);
+
 	// アニメーション再生
 	void UpdateAnim(void);
 
@@ -50,6 +56,7 @@ private:
 	VECTOR pos_;	// 座標
 	VECTOR angle_;	// 向き
 	VECTOR scale_;	// 大きさ
+	float jumpPow_;	// ジャンプ力
 
 	// アニメーション
 	ANIM_TYPE prevAnimType_;	// 前回のアニメーション種別

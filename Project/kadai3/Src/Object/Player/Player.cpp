@@ -28,6 +28,9 @@ void Player::Init(void)
 	// モデルの色調整(自己発光)
 	MV1SetMaterialEmiColor(modelId_, 0, EMI_COLOR);
 
+	// ジャンプ力の初期化
+	jumpPow_ = 0.0f;
+
 	// アニメーション
 	prevAnimType_ = ANIM_TYPE::IDEL;
 	nowAnimType_ = ANIM_TYPE::IDEL;
@@ -59,6 +62,9 @@ void Player::Update(void)
 {
 	// 移動操作
 	ProcessMove();
+
+	// ジャンプ操作
+	ProcessJump();
 
 	// アニメーションの更新
 	UpdateAnim();
@@ -136,6 +142,25 @@ void Player::ProcessMove(void)
 		// アニメーションを変更する
 		nowAnimType_ = ANIM_TYPE::IDEL;
 	}
+}
+
+void Player::ProcessJump(void)
+{
+	// 重力
+	jumpPow_ -= GRAVITY;
+
+	// プレイヤーの座標にジャンプ力を加算する
+	pos_.y += jumpPow_;
+
+	// 衝突判定前の落下制御
+	if (pos_.y < 0.0f)
+	{
+		pos_.y = 0.0f;
+		jumpPow_ = 0.0f;
+	}
+
+	// モデルに座標を設定する
+	MV1SetPosition(modelId_, pos_);
 }
 
 void Player::UpdateAnim(void)
