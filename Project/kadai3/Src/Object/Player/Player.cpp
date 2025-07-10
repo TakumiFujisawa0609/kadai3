@@ -142,7 +142,10 @@ void Player::UpdateAnim(void)
 		// アニメーション種別を合わせる
 		prevAnimType_ = nowAnimType_;
 
-		// アニメーションを変更する
+		// モデルから前回のアニメーションを外す
+		MV1DetachAnim(modelId_, attachNo_);
+
+		// 新しいアニメーションに変更する
 		attachNo_ = MV1AttachAnim(modelId_, static_cast<int>(nowAnimType_));
 
 		// アニメーション総時間の取得
