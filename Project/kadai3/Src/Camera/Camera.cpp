@@ -2,6 +2,8 @@
 #include "../Input/InputManager.h"
 #include "../Utility/AsoUtility.h"
 
+Camera* Camera::instance_ = nullptr;
+
 Camera::Camera(void)
 {
 }
@@ -34,7 +36,6 @@ void Camera::Update(void)
 	float anglePowRad = AsoUtility::Deg2RadF(ANGLE_SPEED);
 	if (InputManager::GetInstance()->IsNew(KEY_INPUT_U)) { angle_.x += anglePowRad; }
 	if (InputManager::GetInstance()->IsNew(KEY_INPUT_O)) { angle_.x -= anglePowRad; }
-
 }
 
 void Camera::SetBeforeDraw(void)
@@ -60,4 +61,9 @@ void Camera::DrawDebug(void)
 
 void Camera::Release(void)
 {
+}
+
+void Camera::SetFollowPos(VECTOR pos)
+{
+	followPos_ = pos;
 }

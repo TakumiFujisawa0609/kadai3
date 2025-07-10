@@ -3,6 +3,20 @@
 
 class Camera
 {
+public:
+	// シングルトン（生成・取得・削除）
+	static void CreateInstance(void) { if (instance_ == nullptr) { instance_ = new Camera(); } };
+	static Camera* GetInstance(void) { return instance_; };
+	static void DeleteInstance(void) { if (instance_ != nullptr) { delete instance_; instance_ = nullptr; } }
+
+private:
+	// デフォルトコンストラクタをprivateにして、
+	// 外部から生成できない様にする
+	Camera();
+	~Camera();
+
+	// 静的インスタンス
+	static Camera* instance_;
 
 public:
 
@@ -24,16 +38,19 @@ public:
 	// カメラスピード(度)
 	static constexpr float ANGLE_SPEED = 1.0f;
 
-	Camera(void);
-	~Camera(void);
-
 	void Init(void);
 	void Update(void);
 	void SetBeforeDraw(void);
 	void DrawDebug(void);
 	void Release(void);
 
+	// 追従する座標
+	void SetFollowPos(VECTOR pos);
+
 private:
+
+	// カメラの追従対象の位置
+	VECTOR followPos_;
 
 	// カメラの位置
 	VECTOR pos_;
