@@ -40,6 +40,9 @@ void Block::Create(TYPE type, int baseModelId, int mapX, int mapZ)
 	// À•Wİ’è
 	pos_ = pos;
 	MV1SetPosition(modelId_, pos_);
+
+	// Õ“Ë”»’è(ƒ‚ƒfƒ‹‚Ì‘S‚Ä)
+	MV1SetupCollInfo(modelId_, -1);
 }
 
 void Block::Update(void)

@@ -29,6 +29,10 @@ public:
 	void Draw(void);
 	void Release(void);
 
+	// 線分とブロックの衝突判定
+	bool IsCollisionLine(
+		VECTOR topPos, VECTOR downPos, MV1_COLL_RESULT_POLY* result);
+
 private:
 	// マップデータ
 	void LoadMapCsvData(void);

@@ -27,6 +27,9 @@ public:
 	// 重力
 	static constexpr float GRAVITY = 0.8f;
 
+	// 地面衝突判定用の線分の長さ
+	static constexpr float COLL_LEN = 10.0f;
+
 	// コンストラクタ
 	Player(void);
 
@@ -39,6 +42,12 @@ public:
 	void Update(void);
 	void Draw(void);
 	void Release(void);
+
+	// 座標の取得
+	VECTOR GetPos(void);
+
+	// 衝突判定
+	void CollisionStage(VECTOR pos);
 
 private:
 	// 移動制御

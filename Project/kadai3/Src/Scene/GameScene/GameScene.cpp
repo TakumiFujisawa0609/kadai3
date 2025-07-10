@@ -73,6 +73,9 @@ void GameScene::Update(void)
 
 	// プレイヤーの更新
 	player_->Update();
+
+	// 衝突判定
+	Collision();
 }
 
 // 描画
@@ -90,6 +93,9 @@ void GameScene::Draw(void)
 
 	// プレイヤーの描画
 	player_->Draw();
+
+	// デバッグ描画
+	DebugDraw();
 }
 
 // 解放
@@ -110,4 +116,42 @@ void GameScene::Release(void)
 	// プレイヤーの解放
 	player_->Release();
 	delete player_;
+}
+
+void GameScene::DebugDraw(void)
+{
+	// 地面との衝突用線分
+	DrawSphere3D(lineTopPos_, 20.0f, 10, 0x00ff00, 0x00ff00, true);
+	DrawSphere3D(lineDownPos_, 20.0f, 10, 0x00ff00, 0x00ff00, true);
+	DrawLine3D(lineTopPos_, lineDownPos_, 0xff0000);
+}
+
+void GameScene::Collision(void)
+{
+	// ステージブロックとプレイヤーの衝突
+	CollisionStage();
+}
+
+void GameScene::CollisionStage(void)
+{
+	// ステージブロックとプレイヤーの衝突
+	VECTOR playerPos = player_->GetPos();
+
+	// 線分の上座標
+	VECTOR topPos = playerPos;
+	topPos.y = playerPos.y + (Player::COLL_LEN * 2.0f);
+	lineTopPos_ = topPos;
+
+	// 線分の下座標
+	VECTOR downPos = playerPos;
+	downPos.y = playerPos.y - Player::COLL_LEN;
+	lineDownPos_ = downPos;
+
+	// 線分とブロックモデルの衝突判定
+	MV1_COLL_RESULT_POLY result;
+	if (stage_->IsCollisionLine(topPos, downPos, &result))
+	{
+		// プレイヤーに衝突座標を渡す
+		player_->CollisionStage(result.HitPosition);
+	}
 }

@@ -23,8 +23,22 @@ public:
 	void Release(void)	override;	// 解放
 
 private:
+	// デバッグ描画
+	void DebugDraw(void);
+
+	// 衝突判定
+	void Collision(void);
+
+	// ステージとプレイヤーの衝突判定
+	void CollisionStage(void);
+
+private:
 	Grid* grid_;		// グリッドクラス(デバッグ用)
 
 	Stage* stage_;		// ステージ管理
 	Player* player_;	// プレイヤー
+
+	// 地面との衝突用線分
+	VECTOR lineTopPos_;
+	VECTOR lineDownPos_;
 };

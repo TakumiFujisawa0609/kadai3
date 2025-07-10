@@ -85,6 +85,18 @@ void Player::Release(void)
 	MV1DeleteModel(modelId_);
 }
 
+VECTOR Player::GetPos(void)
+{
+	return pos_;
+}
+
+void Player::CollisionStage(VECTOR pos)
+{
+	// 衝突した位置
+	pos_ = pos;
+	jumpPow_ = 0.0f;
+}
+
 void Player::ProcessMove(void)
 {
 	// 移動方向を決める
@@ -153,11 +165,11 @@ void Player::ProcessJump(void)
 	pos_.y += jumpPow_;
 
 	// 衝突判定前の落下制御
-	if (pos_.y < 0.0f)
-	{
-		pos_.y = 0.0f;
-		jumpPow_ = 0.0f;
-	}
+	//if (pos_.y < 0.0f)
+	//{
+	//	pos_.y = 0.0f;
+	//	jumpPow_ = 0.0f;
+	//}
 
 	// モデルに座標を設定する
 	MV1SetPosition(modelId_, pos_);
