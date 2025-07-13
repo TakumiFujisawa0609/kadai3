@@ -165,11 +165,11 @@ void Player::ProcessJump(void)
 	pos_.y += jumpPow_;
 
 	// Õ“Ë”»’è‘O‚Ì—‰º§Œä
-	//if (pos_.y < 0.0f)
-	//{
-	//	pos_.y = 0.0f;
-	//	jumpPow_ = 0.0f;
-	//}
+	if (pos_.y < -1000.0f)
+	{
+		// ‰Šú‰»
+		Init();
+	}
 
 	// ƒ‚ƒfƒ‹‚ÉÀ•W‚ğİ’è‚·‚é
 	MV1SetPosition(modelId_, pos_);
