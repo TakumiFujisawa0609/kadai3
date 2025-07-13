@@ -4,6 +4,7 @@
 #include "../../Camera/Camera.h"
 #include "../../Object/Stage/Stage.h"
 #include "../../Object/Player/Player.h"
+#include "../../Object/Enemy/EnemyBase.h"
 
 // コンストラクタ
 GameScene::GameScene()
@@ -29,6 +30,9 @@ void GameScene::Init(void)
 
 	// プレイヤーの初期化
 	player_->Init();
+
+	// エネミーの初期化
+	enemy_->Init();
 }
 
 // 読み込み
@@ -47,6 +51,10 @@ void GameScene::Load(void)
 	// プレイヤーの生成
 	player_ = new Player();
 	player_->Load();
+
+	// エネミーの生成
+	enemy_ = new EnemyBase();
+	enemy_->Load();
 }
 
 // 読み込み後の初期化
@@ -57,6 +65,7 @@ void GameScene::LoadEnd(void)
 
 	stage_->LoadEnd();
 	player_->LoadEnd();
+	enemy_->LoadEnd();
 }
 
 // 更新
@@ -73,6 +82,9 @@ void GameScene::Update(void)
 
 	// プレイヤーの更新
 	player_->Update();
+
+	// エネミーの更新
+	enemy_->Update();
 
 	// 衝突判定
 	Collision();
@@ -93,6 +105,9 @@ void GameScene::Draw(void)
 
 	// プレイヤーの描画
 	player_->Draw();
+
+	// エネミーの描画
+	enemy_->Draw();
 
 	// デバッグ描画
 	DebugDraw();
@@ -116,6 +131,10 @@ void GameScene::Release(void)
 	// プレイヤーの解放
 	player_->Release();
 	delete player_;
+
+	// エネミーの解放
+	enemy_->Release();
+	delete enemy_;
 }
 
 void GameScene::DebugDraw(void)
