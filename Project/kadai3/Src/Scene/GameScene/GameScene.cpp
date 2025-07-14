@@ -32,7 +32,7 @@ void GameScene::Init(void)
 	player_->Init();
 
 	// エネミーの初期化
-	enemy_->Init();
+	enemy_->Init(player_);
 }
 
 // 読み込み

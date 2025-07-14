@@ -1,6 +1,9 @@
 #pragma once
 #include <DxLib.h>
 
+// クラスの前方宣言
+class Player;
+
 class EnemyBase
 {
 
@@ -13,7 +16,7 @@ public:
 	~EnemyBase(void);
 
 	// 初期処理
-	void Init(void);
+	void Init(Player* player);
 
 	// 読み込み
 	void Load(void);
@@ -31,6 +34,13 @@ public:
 	void Release(void);
 
 private:
+	// プレイヤーの方向を向く
+	void LookPlayer(void);
+
+private:
+	// プレイヤーの情報アドレス
+	Player* player_;
+
 	// モデルのハンドルID
 	int modelId_;
 
@@ -40,6 +50,8 @@ private:
 	VECTOR angle_;
 	// 大きさ
 	VECTOR scale_;
+	// 移動方向
+	VECTOR moveDir_;
 
 };
 
