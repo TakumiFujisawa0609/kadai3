@@ -16,6 +16,14 @@ public:
 	static constexpr int BLOCK_NUM_X = 20;
 	static constexpr int BLOCK_NUM_Z = 20;
 
+	// ステージ全体のXサイズ
+	static constexpr float STAGE_SIZE_X =
+		Block::SIZE * static_cast<float>(BLOCK_NUM_X);
+
+	// ステージ全体のZサイズ
+	static constexpr float STAGE_SIZE_Z =
+		Block::SIZE * static_cast<float>(BLOCK_NUM_Z);
+
 	// コンストラクタ
 	Stage(void);
 

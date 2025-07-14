@@ -79,6 +79,24 @@ void EnemyBase::Move(void)
 	// ˆÚ“®ˆ—
 	pos_ = VAdd(pos_, VScale(moveDir_, speed_));
 
+	// “G‚ÌˆÚ“®§ŒÀ
+	if (pos_.x < 0.0f)
+	{
+		pos_.x = 0.0f;
+	}
+	if (pos_.x > Stage::STAGE_SIZE_X)
+	{
+		pos_.x = Stage::STAGE_SIZE_X;
+	}
+	if (pos_.z < 0.0f)
+	{
+		pos_.z = 0.0f;
+	}
+	if (pos_.z > Stage::STAGE_SIZE_Z)
+	{
+		pos_.z = Stage::STAGE_SIZE_Z;
+	}
+
 	// ƒ‚ƒfƒ‹‚ÌÀ•W‚ğ”½‰f‚³‚¹‚é
 	MV1SetPosition(modelId_, pos_);
 }
