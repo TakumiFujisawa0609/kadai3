@@ -54,6 +54,10 @@ private:
 
 	// アニメーション再生
 	void UpdateAnim(void);
+
+	// 出現座標の設定
+	void SetSpawnPosition(void);
+
 private:
 	// プレイヤーの情報アドレス
 	Player* player_;

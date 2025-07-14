@@ -29,6 +29,9 @@ void EnemyBase::Init(Player* player)
 	nowAnimTime_ = 0.0f;
 	totalAnimTime_ = 0.0f;
 
+	// 出現座標の設定
+	SetSpawnPosition();
+
 	// プレイヤーの方向を向く
 	LookPlayer();
 }
@@ -170,4 +173,31 @@ void EnemyBase::UpdateAnim(void)
 
 	// アニメーション設定
 	MV1SetAttachAnimTime(modelId_, attachNo_, nowAnimTime_);
+}
+
+void EnemyBase::SetSpawnPosition(void)
+{
+	// ステージの半径
+	float radius = Stage::STAGE_SIZE_X * 0.5f;
+
+	// ステージの中心座標
+	VECTOR centerPos = VGet(radius, 0.0f, radius);
+
+	// ランダムな角度を取得する(360度)
+	int degree = GetRand(360);
+	float radian = static_cast<float>(degree) * DX_PI_F / 180.0f;
+
+	// 角度から方向を求める
+	float dirX = sinf(radian);
+	float dirZ = cosf(radian);
+
+	// ランダムな方向を半径分伸ばしたベクトル
+	VECTOR vec = VScale(VGet(dirX, 0.0f, dirZ), radius);
+
+	// 中心点の座標に加算して、ランダムな座標を求める
+	VECTOR pos = VAdd(centerPos, vec);
+
+	// 出現座標
+	pos_ = pos;
+	MV1SetPosition(modelId_, pos_);
 }
