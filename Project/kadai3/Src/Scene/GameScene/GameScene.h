@@ -5,7 +5,7 @@
 class Grid;
 class Stage;
 class Player;
-class EnemyBase;
+class EnemyManager;
 
 // ベースを継承
 class GameScene : public SceneBase
@@ -36,9 +36,9 @@ private:
 private:
 	Grid* grid_;		// グリッドクラス(デバッグ用)
 
-	Stage* stage_;		// ステージ管理
-	Player* player_;	// プレイヤー
-	EnemyBase* enemy_;	// エネミー
+	EnemyManager* enemyManager_;	// エネミー管理
+	Stage* stage_;					// ステージ管理
+	Player* player_;				// プレイヤー
 
 	// 地面との衝突用線分
 	VECTOR lineTopPos_;

@@ -19,6 +19,9 @@ void EnemyBase::Init(Player* player)
 	// 移動速度の初期化
 	speed_ = 5.0f;
 
+	// 生存フラグは切っておく
+	isAlive_ = false;
+
 	// アニメーション
 	prevAnimType_ = ANIM_TYPE::WALK;
 	nowAnimType_ = ANIM_TYPE::WALK;
@@ -48,6 +51,10 @@ void EnemyBase::LoadEnd(void)
 
 void EnemyBase::Update(void)
 {
+	// 生存していないなら処理しない
+	if (!isAlive_)
+		return;
+
 	// プレイヤーの方向を向く
 	LookPlayer();
 
@@ -60,6 +67,10 @@ void EnemyBase::Update(void)
 
 void EnemyBase::Draw(void)
 {
+	// 生存していないなら処理しない
+	if (!isAlive_)
+		return;
+
 	// 描画
 	MV1DrawModel(modelId_);
 }
@@ -68,6 +79,16 @@ void EnemyBase::Release(void)
 {
 	// モデルの削除
 	MV1DeleteModel(modelId_);
+}
+
+void EnemyBase::SetIsAlive(bool isAlive)
+{
+	isAlive_ = isAlive;
+}
+
+bool EnemyBase::GetIsAlive(void)
+{
+	return isAlive_;
 }
 
 void EnemyBase::LookPlayer(void)

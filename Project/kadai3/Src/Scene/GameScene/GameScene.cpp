@@ -4,7 +4,7 @@
 #include "../../Camera/Camera.h"
 #include "../../Object/Stage/Stage.h"
 #include "../../Object/Player/Player.h"
-#include "../../Object/Enemy/EnemyBase.h"
+#include "../../Object/Enemy/EnemyManager.h"
 
 // コンストラクタ
 GameScene::GameScene()
@@ -31,8 +31,8 @@ void GameScene::Init(void)
 	// プレイヤーの初期化
 	player_->Init();
 
-	// エネミーの初期化
-	enemy_->Init(player_);
+	// エネミー管理の初期化
+	enemyManager_->Init(player_);
 }
 
 // 読み込み
@@ -52,9 +52,9 @@ void GameScene::Load(void)
 	player_ = new Player();
 	player_->Load();
 
-	// エネミーの生成
-	enemy_ = new EnemyBase();
-	enemy_->Load();
+	// エネミー管理の生成
+	enemyManager_ = new EnemyManager();
+	enemyManager_->Load();
 }
 
 // 読み込み後の初期化
@@ -65,7 +65,7 @@ void GameScene::LoadEnd(void)
 
 	stage_->LoadEnd();
 	player_->LoadEnd();
-	enemy_->LoadEnd();
+	enemyManager_->LoadEnd();
 }
 
 // 更新
@@ -83,8 +83,8 @@ void GameScene::Update(void)
 	// プレイヤーの更新
 	player_->Update();
 
-	// エネミーの更新
-	enemy_->Update();
+	// エネミー管理の更新
+	enemyManager_->Update();
 
 	// 衝突判定
 	Collision();
@@ -106,8 +106,8 @@ void GameScene::Draw(void)
 	// プレイヤーの描画
 	player_->Draw();
 
-	// エネミーの描画
-	enemy_->Draw();
+	// エネミー管理の描画
+	enemyManager_->Draw();
 
 	// デバッグ描画
 	DebugDraw();
@@ -132,9 +132,9 @@ void GameScene::Release(void)
 	player_->Release();
 	delete player_;
 
-	// エネミーの解放
-	enemy_->Release();
-	delete enemy_;
+	// エネミー管理の解放
+	enemyManager_->Release();
+	delete enemyManager_;
 }
 
 void GameScene::DebugDraw(void)

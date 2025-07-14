@@ -39,6 +39,12 @@ public:
 	// 解放処理
 	void Release(void);
 
+	// 生存フラグを立てる
+	void SetIsAlive(bool isAlive);
+
+	// 生存フラグを取得する
+	bool GetIsAlive(void);
+
 private:
 	// プレイヤーの方向を向く
 	void LookPlayer(void);
@@ -54,6 +60,9 @@ private:
 
 	// モデルのハンドルID
 	int modelId_;
+
+	// 生存フラグ
+	bool isAlive_;
 
 	// 座標
 	VECTOR pos_;
