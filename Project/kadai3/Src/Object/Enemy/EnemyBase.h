@@ -6,6 +6,12 @@ class Player;
 
 class EnemyBase
 {
+public:
+	// アニメーション種別
+	enum class ANIM_TYPE
+	{
+		WALK = 6,	// 歩き
+	};
 
 public:
 
@@ -40,6 +46,8 @@ private:
 	// 移動
 	void Move(void);
 
+	// アニメーション再生
+	void UpdateAnim(void);
 private:
 	// プレイヤーの情報アドレス
 	Player* player_;
@@ -57,6 +65,14 @@ private:
 	VECTOR moveDir_;
 	// 移動速度
 	float speed_;
+
+	// アニメーション
+	ANIM_TYPE prevAnimType_;	// 前回のアニメーション種別
+	ANIM_TYPE nowAnimType_;		// 現在のアニメーション種別
+
+	int attachNo_;				// アタッチNo
+	float nowAnimTime_;			// 再生中の時間
+	float totalAnimTime_;		// 総再生時間
 
 };
 

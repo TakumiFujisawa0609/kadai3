@@ -19,6 +19,13 @@ void EnemyBase::Init(Player* player)
 	// 移動速度の初期化
 	speed_ = 5.0f;
 
+	// アニメーション
+	prevAnimType_ = ANIM_TYPE::WALK;
+	nowAnimType_ = ANIM_TYPE::WALK;
+	attachNo_ = 0;
+	nowAnimTime_ = 0.0f;
+	totalAnimTime_ = 0.0f;
+
 	// プレイヤーの方向を向く
 	LookPlayer();
 }
@@ -31,6 +38,12 @@ void EnemyBase::Load(void)
 
 void EnemyBase::LoadEnd(void)
 {
+	// アニメーション初期化(読み込み後)
+	// Walkアニメーションをアタッチする
+	attachNo_ = MV1AttachAnim(modelId_, static_cast<int>(nowAnimType_));
+
+	// アニメーションの総再生時間を取得
+	totalAnimTime_ = MV1GetAttachAnimTotalTime(modelId_, attachNo_);
 }
 
 void EnemyBase::Update(void)
@@ -40,6 +53,9 @@ void EnemyBase::Update(void)
 
 	// 移動
 	Move();
+
+	// アニメーション更新
+	UpdateAnim();
 }
 
 void EnemyBase::Draw(void)
@@ -99,4 +115,38 @@ void EnemyBase::Move(void)
 
 	// モデルの座標を反映させる
 	MV1SetPosition(modelId_, pos_);
+}
+
+void EnemyBase::UpdateAnim(void)
+{
+	// アニメーションが変更された？
+	if (prevAnimType_ != nowAnimType_)
+	{
+		// アニメーション種別を合わせる
+		prevAnimType_ = nowAnimType_;
+
+		// モデルから前回のアニメーションを外す
+		MV1DetachAnim(modelId_, attachNo_);
+
+		// 新しいアニメーションに変更する
+		attachNo_ = MV1AttachAnim(modelId_, static_cast<int>(nowAnimType_));
+
+		// アニメーション総時間の取得
+		totalAnimTime_ = MV1GetAttachAnimTotalTime(modelId_, attachNo_);
+
+		// アニメーション時間を初期化
+		nowAnimTime_ = 0.0f;
+	}
+
+	// アニメーションを進める
+	nowAnimTime_ += 1.0f;
+
+	// アニメーションをループ
+	if (nowAnimTime_ > totalAnimTime_)
+	{
+		nowAnimTime_ = 0.0f;
+	}
+
+	// アニメーション設定
+	MV1SetAttachAnimTime(modelId_, attachNo_, nowAnimTime_);
 }
