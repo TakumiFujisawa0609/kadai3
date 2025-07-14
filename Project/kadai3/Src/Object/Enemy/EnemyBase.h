@@ -7,10 +7,26 @@ class Player;
 class EnemyBase
 {
 public:
+	// エネミー種別
+	enum class TYPE
+	{
+		DEMON,	// 悪魔
+		WIZARD,	// 魔法使い
+		GIANT,	// 巨人
+		MAX,
+	};
+
 	// アニメーション種別
 	enum class ANIM_TYPE
 	{
-		WALK = 6,	// 歩き
+		ATTACK,	// 攻撃
+		DEAD,	// 死亡
+		HIT,	// ヒット
+		IDLE,	// 待機
+		JUMP,	// ジャンプ
+		RUN,	// 走る
+		WALK,	// 歩き
+		MAX
 	};
 
 public:
@@ -25,7 +41,7 @@ public:
 	void Init(Player* player);
 
 	// 読み込み
-	void Load(void);
+	void Load(TYPE type, int originModelId);
 
 	// 読み込み後
 	void LoadEnd(void);
@@ -67,6 +83,9 @@ private:
 
 	// 生存フラグ
 	bool isAlive_;
+
+	// 種別
+	TYPE type_;
 
 	// 座標
 	VECTOR pos_;

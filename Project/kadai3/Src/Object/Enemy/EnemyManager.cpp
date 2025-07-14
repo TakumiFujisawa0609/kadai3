@@ -27,13 +27,25 @@ void EnemyManager::Init(Player* player)
 
 void EnemyManager::Load(void)
 {
+	// オリジナルハンドルの作成
+	originModelId_[static_cast<int>(EnemyBase::TYPE::DEMON)] = 
+		MV1LoadModel("Data/Model/Enemy/Demon.mv1");
+	originModelId_[static_cast<int>(EnemyBase::TYPE::WIZARD)] =
+		MV1LoadModel("Data/Model/Enemy/Wizard.mv1");
+	originModelId_[static_cast<int>(EnemyBase::TYPE::GIANT)] =
+		MV1LoadModel("Data/Model/Enemy/Giant.mv1");
+
 	// エネミーの生成
 	// エネミーの最大数分確保しておく
 	for (int i = 0; i < ENEMY_MAX_NUM; i++)
 	{
 		// デーモンを生成
 		EnemyBase* enemy = new Demon();
-		enemy->Load();
+
+		// 読み込み
+		enemy->Load(
+			EnemyBase::TYPE::DEMON,
+			originModelId_[static_cast<int>(EnemyBase::TYPE::DEMON)]);
 
 		// 作成したエネミーを配列に入れる
 		enemys_.push_back(enemy);

@@ -36,10 +36,13 @@ void EnemyBase::Init(Player* player)
 	LookPlayer();
 }
 
-void EnemyBase::Load(void)
+void EnemyBase::Load(TYPE type, int originModelId)
 {
-	// モデルのロード
-	modelId_ = MV1LoadModel("Data/Model/Enemy/Demon.mv1");
+	// エネミー種別
+	type_ = type;
+
+	// モデルの複製
+	modelId_ = MV1DuplicateModel(originModelId);
 }
 
 void EnemyBase::LoadEnd(void)

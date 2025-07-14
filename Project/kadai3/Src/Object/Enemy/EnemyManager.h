@@ -1,5 +1,7 @@
 #pragma once
 #include <vector>
+#include "EnemyBase.h"
+
 class EnemyBase;
 class Player;
 
@@ -25,6 +27,9 @@ public:
 	void Release(void);		// 解放
 
 private:
+	// エネミー用のモデルハンドルID
+	int originModelId_[static_cast<int>(EnemyBase::TYPE::MAX)];
+
 	// エネミーをまとめる動的配列
 	std::vector<EnemyBase*> enemys_;
 
