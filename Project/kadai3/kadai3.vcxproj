@@ -147,6 +147,7 @@
     <ClCompile Include="Src\Input\InputManager.cpp" />
     <ClCompile Include="Src\Loading\Loading.cpp" />
     <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\Object\Enemy\Demon\Demon.cpp" />
     <ClCompile Include="Src\Object\Enemy\EnemyBase.cpp" />
     <ClCompile Include="Src\Object\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Src\Object\Grid\Grid.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Src\FpsControl\FpsControl.h" />
     <ClInclude Include="Src\Input\InputManager.h" />
     <ClInclude Include="Src\Loading\Loading.h" />
+    <ClInclude Include="Src\Object\Enemy\Demon\Demon.h" />
     <ClInclude Include="Src\Object\Enemy\EnemyBase.h" />
     <ClInclude Include="Src\Object\Enemy\EnemyManager.h" />
     <ClInclude Include="Src\Object\Grid\Grid.h" />

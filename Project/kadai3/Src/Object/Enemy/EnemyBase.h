@@ -19,7 +19,7 @@ public:
 	EnemyBase(void);
 
 	// デストラクタ
-	~EnemyBase(void);
+	virtual ~EnemyBase(void);
 
 	// 初期処理
 	void Init(Player* player);

@@ -1,5 +1,6 @@
 #include "EnemyManager.h"
 #include "EnemyBase.h"
+#include "Demon/Demon.h"
 
 EnemyManager::EnemyManager(void)
 {
@@ -30,7 +31,8 @@ void EnemyManager::Load(void)
 	// エネミーの最大数分確保しておく
 	for (int i = 0; i < ENEMY_MAX_NUM; i++)
 	{
-		EnemyBase* enemy = new EnemyBase();
+		// デーモンを生成
+		EnemyBase* enemy = new Demon();
 		enemy->Load();
 
 		// 作成したエネミーを配列に入れる
