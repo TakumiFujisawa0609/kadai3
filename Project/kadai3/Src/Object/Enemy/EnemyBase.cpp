@@ -1,6 +1,7 @@
 #include "EnemyBase.h"
 #include "../../Utility/AsoUtility.h"
 #include "../Player/Player.h"
+#include "../Stage/Stage.h"
 
 EnemyBase::EnemyBase(void)
 {
@@ -14,6 +15,9 @@ void EnemyBase::Init(Player* player)
 {
 	// プレイヤーのポイントを取得
 	player_ = player;
+
+	// 移動速度の初期化
+	speed_ = 5.0f;
 
 	// プレイヤーの方向を向く
 	LookPlayer();
@@ -33,6 +37,9 @@ void EnemyBase::Update(void)
 {
 	// プレイヤーの方向を向く
 	LookPlayer();
+
+	// 移動
+	Move();
 }
 
 void EnemyBase::Draw(void)
@@ -65,4 +72,13 @@ void EnemyBase::LookPlayer(void)
 
 	// モデルの回転を反映させる
 	MV1SetRotationXYZ(modelId_, angle_);
+}
+
+void EnemyBase::Move(void)
+{
+	// 移動処理
+	pos_ = VAdd(pos_, VScale(moveDir_, speed_));
+
+	// モデルの座標を反映させる
+	MV1SetPosition(modelId_, pos_);
 }

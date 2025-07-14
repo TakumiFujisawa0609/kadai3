@@ -37,6 +37,9 @@ private:
 	// プレイヤーの方向を向く
 	void LookPlayer(void);
 
+	// 移動
+	void Move(void);
+
 private:
 	// プレイヤーの情報アドレス
 	Player* player_;
@@ -52,6 +55,8 @@ private:
 	VECTOR scale_;
 	// 移動方向
 	VECTOR moveDir_;
+	// 移動速度
+	float speed_;
 
 };
 
