@@ -30,6 +30,11 @@ public:
 	};
 
 public:
+	// 定数
+	// 自己発光
+	static constexpr COLOR_F EMI_COLOR = { 0.6f,0.6f,0.6f,1.0f };
+
+public:
 
 	// コンストラクタ
 	EnemyBase(void);
@@ -74,7 +79,23 @@ private:
 	// 出現座標の設定
 	void SetSpawnPosition(void);
 
-private:
+protected:
+	// パラメータの設定
+	virtual void SetParam(void);
+
+protected:
+	// 衝突判定用半径
+	float collRadius_;
+
+	// 出現範囲(半径)
+	float spawnRange_;
+
+	// 体力
+	int hp_;
+
+	// 移動速度
+	float speed_;
+
 	// プレイヤーの情報アドレス
 	Player* player_;
 
@@ -95,8 +116,6 @@ private:
 	VECTOR scale_;
 	// 移動方向
 	VECTOR moveDir_;
-	// 移動速度
-	float speed_;
 
 	// アニメーション
 	ANIM_TYPE prevAnimType_;	// 前回のアニメーション種別

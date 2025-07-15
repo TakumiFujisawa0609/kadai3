@@ -1,15 +1,14 @@
 #pragma once
 #include "../EnemyBase.h"
 
-class Demon : public EnemyBase
+class Wizard : public EnemyBase
 {
 public:
-	Demon(void);			// コンストラクタ
-	virtual ~Demon(void);	// デストラクタ
+	Wizard(void);			// コンストラクタ
+	virtual ~Wizard(void);	// デストラクタ
 
 protected:
 	// パラメータの設定
 	void SetParam(void) override;
 
 };
-

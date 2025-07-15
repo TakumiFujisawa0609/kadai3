@@ -29,6 +29,15 @@ void EnemyBase::Init(Player* player)
 	nowAnimTime_ = 0.0f;
 	totalAnimTime_ = 0.0f;
 
+	// パラメータの設定
+	SetParam();
+
+	// 自己発光
+	MV1SetMaterialEmiColor(modelId_, 0, EMI_COLOR);
+
+	// 大きさ変更
+	MV1SetScale(modelId_, scale_);
+
 	// 出現座標の設定
 	SetSpawnPosition();
 
@@ -203,4 +212,8 @@ void EnemyBase::SetSpawnPosition(void)
 	// 出現座標
 	pos_ = pos;
 	MV1SetPosition(modelId_, pos_);
+}
+
+void EnemyBase::SetParam(void)
+{
 }

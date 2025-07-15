@@ -1,6 +1,7 @@
 #include "EnemyManager.h"
 #include "EnemyBase.h"
 #include "Demon/Demon.h"
+#include "Wizard/Wizard.h"
 
 EnemyManager::EnemyManager(void)
 {
@@ -39,16 +40,34 @@ void EnemyManager::Load(void)
 	// エネミーの最大数分確保しておく
 	for (int i = 0; i < ENEMY_MAX_NUM; i++)
 	{
-		// デーモンを生成
-		EnemyBase* enemy = new Demon();
+		// とりあえず、偶数時にウィザードを
+		if (i % 2 == 0)
+		{
+			// デーモンを生成
+			EnemyBase* enemy = new Demon();
 
-		// 読み込み
-		enemy->Load(
-			EnemyBase::TYPE::DEMON,
-			originModelId_[static_cast<int>(EnemyBase::TYPE::DEMON)]);
+			// 読み込み
+			enemy->Load(
+				EnemyBase::TYPE::DEMON,
+				originModelId_[static_cast<int>(EnemyBase::TYPE::DEMON)]);
 
-		// 作成したエネミーを配列に入れる
-		enemys_.push_back(enemy);
+			// 作成したエネミーを配列に入れる
+			enemys_.push_back(enemy);
+		}
+		else
+		{
+			// ウィザードを生成
+			EnemyBase* enemy = new Wizard();
+
+			// 読み込み
+			enemy->Load(
+				EnemyBase::TYPE::WIZARD,
+				originModelId_[static_cast<int>(EnemyBase::TYPE::WIZARD)]);
+
+			// 作成したエネミーを配列に入れる
+			enemys_.push_back(enemy);
+		}
+
 	}
 }
 
