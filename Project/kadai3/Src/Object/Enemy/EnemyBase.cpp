@@ -213,7 +213,3 @@ void EnemyBase::SetSpawnPosition(void)
 	pos_ = pos;
 	MV1SetPosition(modelId_, pos_);
 }
-
-void EnemyBase::SetParam(void)
-{
-}

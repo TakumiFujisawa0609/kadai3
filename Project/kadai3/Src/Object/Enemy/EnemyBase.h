@@ -80,8 +80,8 @@ private:
 	void SetSpawnPosition(void);
 
 protected:
-	// パラメータの設定
-	virtual void SetParam(void);
+	// パラメータの設定(純粋仮想関数)
+	virtual void SetParam(void) = 0;
 
 protected:
 	// 衝突判定用半径
