@@ -16,6 +16,14 @@ public:
 		MAX,
 	};
 
+	// 状態
+	enum class STATE
+	{
+		IDLE,	// 待機
+		MOVING,	// 移動
+		ATTACK,	// 攻撃
+	};
+
 	// アニメーション種別
 	enum class ANIM_TYPE
 	{
@@ -66,6 +74,9 @@ public:
 	// 生存フラグを取得する
 	bool GetIsAlive(void);
 
+	// 状態遷移
+	void ChangeState(STATE state);
+
 private:
 	// プレイヤーの方向を向く
 	void LookPlayer(void);
@@ -82,6 +93,18 @@ private:
 protected:
 	// パラメータの設定(純粋仮想関数)
 	virtual void SetParam(void) = 0;
+
+	// 状態遷移
+	virtual void ChangeMoving(void);
+	virtual void ChangeAttack(void);
+
+	// 状態別更新
+	virtual void UpdateMoving(void);
+	virtual void UpdateAttack(void);
+
+	// 状態別描画
+	virtual void DrawMoving(void);
+	virtual void DrawAttack(void);
 
 protected:
 	// 衝突判定用半径
@@ -107,6 +130,9 @@ protected:
 
 	// 種別
 	TYPE type_;
+
+	// 状態
+	STATE state_;
 
 	// 座標
 	VECTOR pos_;

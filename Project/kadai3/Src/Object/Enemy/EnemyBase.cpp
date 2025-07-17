@@ -43,6 +43,9 @@ void EnemyBase::Init(Player* player)
 
 	// プレイヤーの方向を向く
 	LookPlayer();
+
+	// 初期状態
+	ChangeState(STATE::MOVING);
 }
 
 void EnemyBase::Load(TYPE type, int originModelId)
@@ -70,11 +73,19 @@ void EnemyBase::Update(void)
 	if (!isAlive_)
 		return;
 
-	// プレイヤーの方向を向く
-	LookPlayer();
-
-	// 移動
-	Move();
+	switch (state_)
+	{
+	case EnemyBase::STATE::IDLE:
+		break;
+	case EnemyBase::STATE::MOVING:
+		UpdateMoving();
+		break;
+	case EnemyBase::STATE::ATTACK:
+		UpdateAttack();
+		break;
+	default:
+		break;
+	}
 
 	// アニメーション更新
 	UpdateAnim();
@@ -86,8 +97,19 @@ void EnemyBase::Draw(void)
 	if (!isAlive_)
 		return;
 
-	// 描画
-	MV1DrawModel(modelId_);
+	switch (state_)
+	{
+	case EnemyBase::STATE::IDLE:
+		break;
+	case EnemyBase::STATE::MOVING:
+		DrawMoving();
+		break;
+	case EnemyBase::STATE::ATTACK:
+		DrawAttack();
+		break;
+	default:
+		break;
+	}
 }
 
 void EnemyBase::Release(void)
@@ -104,6 +126,25 @@ void EnemyBase::SetIsAlive(bool isAlive)
 bool EnemyBase::GetIsAlive(void)
 {
 	return isAlive_;
+}
+
+void EnemyBase::ChangeState(STATE state)
+{
+	state_ = state;
+
+	switch (state_)
+	{
+	case EnemyBase::STATE::IDLE:
+		break;
+	case EnemyBase::STATE::MOVING:
+		ChangeMoving();
+		break;
+	case EnemyBase::STATE::ATTACK:
+		ChangeAttack();
+		break;
+	default:
+		break;
+	}
 }
 
 void EnemyBase::LookPlayer(void)
@@ -212,4 +253,38 @@ void EnemyBase::SetSpawnPosition(void)
 	// 出現座標
 	pos_ = pos;
 	MV1SetPosition(modelId_, pos_);
+}
+
+void EnemyBase::ChangeMoving(void)
+{
+	
+}
+
+void EnemyBase::ChangeAttack(void)
+{
+}
+
+void EnemyBase::UpdateMoving(void)
+{
+	// プレイヤーの方向を向く
+	LookPlayer();
+
+	// 移動
+	Move();
+}
+
+void EnemyBase::UpdateAttack(void)
+{
+}
+
+void EnemyBase::DrawMoving(void)
+{
+	// 描画
+	MV1DrawModel(modelId_);
+}
+
+void EnemyBase::DrawAttack(void)
+{
+	// 描画
+	MV1DrawModel(modelId_);
 }
