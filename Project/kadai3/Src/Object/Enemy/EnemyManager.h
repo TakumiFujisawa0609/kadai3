@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "EnemyBase.h"
+#include "Bullet/BulletBase.h"
 
 class EnemyBase;
 class Player;
@@ -32,6 +33,9 @@ private:
 
 	// エネミーをまとめる動的配列
 	std::vector<EnemyBase*> enemys_;
+
+	// 弾用のモデルハンドルID
+	int originBulletModelId_[static_cast<int>(BulletBase::TYPE::MAX)];
 
 	// プレイヤーの情報アドレス
 	Player* player_;

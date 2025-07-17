@@ -36,6 +36,10 @@ void EnemyManager::Load(void)
 	originModelId_[static_cast<int>(EnemyBase::TYPE::GIANT)] =
 		MV1LoadModel("Data/Model/Enemy/Giant.mv1");
 
+	// 弾のオリジナルハンドルの作成
+	originBulletModelId_[static_cast<int>(BulletBase::TYPE::STRAIGHT)] =
+		MV1LoadModel("Data/Model/Effect/Fireball/Fireball.mv1");
+
 	// エネミーの生成
 	// エネミーの最大数分確保しておく
 	for (int i = 0; i < ENEMY_MAX_NUM; i++)
@@ -49,7 +53,9 @@ void EnemyManager::Load(void)
 			// 読み込み
 			enemy->Load(
 				EnemyBase::TYPE::DEMON,
-				originModelId_[static_cast<int>(EnemyBase::TYPE::DEMON)]);
+				originModelId_[static_cast<int>(EnemyBase::TYPE::DEMON)],
+				-1
+			);
 
 			// 作成したエネミーを配列に入れる
 			enemys_.push_back(enemy);
@@ -62,7 +68,9 @@ void EnemyManager::Load(void)
 			// 読み込み
 			enemy->Load(
 				EnemyBase::TYPE::WIZARD,
-				originModelId_[static_cast<int>(EnemyBase::TYPE::WIZARD)]);
+				originModelId_[static_cast<int>(EnemyBase::TYPE::WIZARD)],
+				originBulletModelId_[static_cast<int>(BulletBase::TYPE::STRAIGHT)]
+			);
 
 			// 作成したエネミーを配列に入れる
 			enemys_.push_back(enemy);

@@ -46,16 +46,23 @@ void EnemyBase::Init(Player* player)
 	LookPlayer();
 
 	// 初期状態
-	ChangeState(STATE::MOVING);
+	ChangeState(STATE::ATTACK);
 }
 
-void EnemyBase::Load(TYPE type, int originModelId)
+void EnemyBase::Load(TYPE type, int originModelId, int originBulletModelId)
 {
 	// エネミー種別
 	type_ = type;
 
 	// モデルの複製
 	modelId_ = MV1DuplicateModel(originModelId);
+
+	// 弾の生成
+	BulletBase* bullet = new Straight();
+	bullet->Load(originBulletModelId);
+
+	// 弾を配列に入れる
+	bullets_.push_back(bullet);
 }
 
 void EnemyBase::LoadEnd(void)
@@ -279,16 +286,20 @@ void EnemyBase::ChangeMoving(void)
 void EnemyBase::ChangeAttack(void)
 {
 	// 攻撃アニメーション再生
-	nowAnimType_ = ANIM_TYPE::WALK;
+	nowAnimType_ = ANIM_TYPE::ATTACK;
+
+	// プレイヤーの方向を向く
+	LookPlayer();
 
 	// 攻撃カウンタをリセット
 	attackCount_ = 0;
 
-	// 有効な弾を取得する
-	BulletBase* bullet = GetValidBullet();
-
-	// 弾を生成
-	bullet->CreateBullet(pos_, moveDir_);
+	// 弾を使用
+	for (BulletBase* bullet : bullets_)
+	{
+		// 弾を使用
+		bullet->CreateBullet(pos_, moveDir_);
+	}
 }
 
 void EnemyBase::UpdateMoving(void)
@@ -302,7 +313,6 @@ void EnemyBase::UpdateMoving(void)
 
 void EnemyBase::UpdateAttack(void)
 {
-
 }
 
 void EnemyBase::DrawMoving(void)
@@ -333,25 +343,4 @@ void EnemyBase::DrawBullet(void)
 	{
 		bullet->Draw();
 	}
-}
-
-BulletBase* EnemyBase::GetValidBullet(void)
-{
-	size_t size = bullets_.size();
-	for (int i = 0; i < size; i++)
-	{
-		// 未使用(生存していない)
-		if (!bullets_[i]->GetIsAlive())
-		{
-			return bullets_[i];
-		}
-	}
-
-	// 新しい弾のインスタンスを生成する
-	BulletBase* shot = new Straight();
-
-	// 可変長配列に追加
-	bullets_.push_back(shot);
-
-	return shot;
 }

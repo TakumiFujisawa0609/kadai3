@@ -8,9 +8,10 @@ BulletBase::~BulletBase(void)
 {
 }
 
-void BulletBase::Load(void)
+void BulletBase::Load(int originHandle)
 {
-    baseModelId_ = LoadGraph("");
+    // モデルの複製
+    modelId_ = MV1DuplicateModel(originHandle);
 }
 
 void BulletBase::LoadEnd(void)
@@ -19,16 +20,11 @@ void BulletBase::LoadEnd(void)
 
 void BulletBase::CreateBullet(VECTOR pos, VECTOR dir)
 {
-
     // 弾の発射位置を設定
     pos_ = pos;
 
     // 弾の発射方向の設定
     dir_ = dir;
-
-    // 使用メモリ容量と読み込み時間の削減のため
-    // モデルデータをいくつもメモリ上に存在させない
-    modelId_ = MV1DuplicateModel(baseModelId_);
 
     // パラメータ設定
     SetParam();
@@ -38,7 +34,6 @@ void BulletBase::CreateBullet(VECTOR pos, VECTOR dir)
 
     // 位置の設定
     MV1SetPosition(modelId_, pos_);
-
 }
 
 void BulletBase::Update(void)
@@ -50,18 +45,6 @@ void BulletBase::Update(void)
         return;
     }
 
-    // 弾を移動させる
-
-    // 移動量の計算(方向×スピード)
-    //VECTOR movePow;
-    //movePow.x = dir_.x * speed_;
-    //movePow.y = dir_.y * speed_;
-    //movePow.z = dir_.z * speed_;
-
-    // 移動処理
-    //pos_.x += movePow.x;
-    //pos_.y += movePow.y;
-    //pos_.z += movePow.z;
     pos_ = VAdd(pos_, VScale(dir_, speed_));
 
     // 位置の設定
@@ -107,11 +90,6 @@ VECTOR BulletBase::GetPos(void)
 float BulletBase::GetCollisionRadius(void)
 {
     return collisionRadius_;
-}
-
-BulletBase::TYPE BulletBase::GetType(void)
-{
-    return type_;
 }
 
 void BulletBase::ReduceCntAlive(void)

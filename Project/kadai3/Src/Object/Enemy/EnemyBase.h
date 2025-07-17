@@ -57,7 +57,7 @@ public:
 	void Init(Player* player);
 
 	// 読み込み
-	void Load(TYPE type, int originModelId);
+	void Load(TYPE type, int originModelId, int originBulletModelId);
 
 	// 読み込み後
 	void LoadEnd(void);
@@ -170,7 +170,7 @@ protected:
 	std::vector<BulletBase*> bullets_;
 
 	// エフェクト用モデルハンドルID
-	int baseAttackEffectModelId_;
+	int baseBulletModelId_;
 
 };
 

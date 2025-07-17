@@ -10,13 +10,14 @@ public:
 	enum class TYPE
 	{
 		STRAIGHT,
-		ROCK
+
+		MAX,
 	};
 	
 	BulletBase(void);			// コンストラクタ
 	virtual ~BulletBase(void);	// デストラクタ
 
-	void Load(void);			// 読み込み
+	void Load(int originHandle);// 読み込み
 	void LoadEnd(void);			// 読み込み後
 	virtual void Update(void);	// 更新
 	void Draw(void);			// 描画
@@ -34,16 +35,7 @@ public:
 	// 弾の衝突判定用半径
 	float GetCollisionRadius(void);
 
-	// 弾の種別
-	TYPE GetType(void);
-
 protected:
-
-	// 弾の種別
-	TYPE type_;
-
-	// 元となる弾のモデルID
-	int baseModelId_;
 
 	// 弾のモデルID
 	int modelId_;

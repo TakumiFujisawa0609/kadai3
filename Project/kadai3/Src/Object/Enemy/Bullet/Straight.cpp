@@ -10,7 +10,6 @@ Straight::~Straight(void)
 
 void Straight::SetParam(void)
 {
-
     // ’e‚Ì‘å‚«‚³‚ğİ’è
     scale_ = { 0.4f, 0.4f, 0.4f };
 
