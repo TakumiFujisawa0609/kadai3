@@ -1,8 +1,11 @@
 #pragma once
 #include <DxLib.h>
+#include <vector>
+
 
 // クラスの前方宣言
 class Player;
+class BulletBase;
 
 class EnemyBase
 {
@@ -106,6 +109,15 @@ protected:
 	virtual void DrawMoving(void);
 	virtual void DrawAttack(void);
 
+	// 弾の更新
+	void UpdateBullet(void);
+
+	// 弾の描画
+	void DrawBullet(void);
+
+	// 有効な弾を取得
+	BulletBase* GetValidBullet(void);
+
 protected:
 	// 衝突判定用半径
 	float collRadius_;
@@ -150,6 +162,15 @@ protected:
 	int attachNo_;				// アタッチNo
 	float nowAnimTime_;			// 再生中の時間
 	float totalAnimTime_;		// 総再生時間
+
+	// 攻撃
+	int attackCount_;
+
+	// 弾
+	std::vector<BulletBase*> bullets_;
+
+	// エフェクト用モデルハンドルID
+	int baseAttackEffectModelId_;
 
 };
 

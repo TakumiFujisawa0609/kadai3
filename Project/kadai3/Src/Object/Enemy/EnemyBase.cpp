@@ -2,6 +2,7 @@
 #include "../../Utility/AsoUtility.h"
 #include "../Player/Player.h"
 #include "../Stage/Stage.h"
+#include "Bullet/Straight.h"
 
 EnemyBase::EnemyBase(void)
 {
@@ -87,6 +88,9 @@ void EnemyBase::Update(void)
 		break;
 	}
 
+	// 弾の更新
+	UpdateBullet();
+
 	// アニメーション更新
 	UpdateAnim();
 }
@@ -110,12 +114,23 @@ void EnemyBase::Draw(void)
 	default:
 		break;
 	}
+
+	// 弾の描画
+	DrawBullet();
 }
 
 void EnemyBase::Release(void)
 {
 	// モデルの削除
 	MV1DeleteModel(modelId_);
+
+	// 弾の解放
+	for (BulletBase* bullet : bullets_)
+	{
+		bullet->Release();
+		delete bullet;
+	}
+	bullets_.clear();
 }
 
 void EnemyBase::SetIsAlive(bool isAlive)
@@ -257,11 +272,23 @@ void EnemyBase::SetSpawnPosition(void)
 
 void EnemyBase::ChangeMoving(void)
 {
-	
+	// 歩くアニメーション再生
+	nowAnimType_ = ANIM_TYPE::WALK;
 }
 
 void EnemyBase::ChangeAttack(void)
 {
+	// 攻撃アニメーション再生
+	nowAnimType_ = ANIM_TYPE::WALK;
+
+	// 攻撃カウンタをリセット
+	attackCount_ = 0;
+
+	// 有効な弾を取得する
+	BulletBase* bullet = GetValidBullet();
+
+	// 弾を生成
+	bullet->CreateBullet(pos_, moveDir_);
 }
 
 void EnemyBase::UpdateMoving(void)
@@ -275,6 +302,7 @@ void EnemyBase::UpdateMoving(void)
 
 void EnemyBase::UpdateAttack(void)
 {
+
 }
 
 void EnemyBase::DrawMoving(void)
@@ -287,4 +315,43 @@ void EnemyBase::DrawAttack(void)
 {
 	// 描画
 	MV1DrawModel(modelId_);
+}
+
+void EnemyBase::UpdateBullet(void)
+{
+	// 弾の更新
+	for (BulletBase* bullet : bullets_)
+	{
+		bullet->Update();
+	}
+}
+
+void EnemyBase::DrawBullet(void)
+{
+	// 弾の更新
+	for (BulletBase* bullet : bullets_)
+	{
+		bullet->Draw();
+	}
+}
+
+BulletBase* EnemyBase::GetValidBullet(void)
+{
+	size_t size = bullets_.size();
+	for (int i = 0; i < size; i++)
+	{
+		// 未使用(生存していない)
+		if (!bullets_[i]->GetIsAlive())
+		{
+			return bullets_[i];
+		}
+	}
+
+	// 新しい弾のインスタンスを生成する
+	BulletBase* shot = new Straight();
+
+	// 可変長配列に追加
+	bullets_.push_back(shot);
+
+	return shot;
 }
