@@ -80,7 +80,7 @@ public:
 	// 状態遷移
 	void ChangeState(STATE state);
 
-private:
+protected:
 	// プレイヤーの方向を向く
 	void LookPlayer(void);
 
@@ -93,7 +93,6 @@ private:
 	// 出現座標の設定
 	void SetSpawnPosition(void);
 
-protected:
 	// パラメータの設定(純粋仮想関数)
 	virtual void SetParam(void) = 0;
 
@@ -114,9 +113,6 @@ protected:
 
 	// 弾の描画
 	void DrawBullet(void);
-
-	// 有効な弾を取得
-	BulletBase* GetValidBullet(void);
 
 protected:
 	// 衝突判定用半径

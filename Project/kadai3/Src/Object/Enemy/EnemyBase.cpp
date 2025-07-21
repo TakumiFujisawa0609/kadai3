@@ -46,7 +46,7 @@ void EnemyBase::Init(Player* player)
 	LookPlayer();
 
 	// 初期状態
-	ChangeState(STATE::ATTACK);
+	ChangeState(STATE::MOVING);
 }
 
 void EnemyBase::Load(TYPE type, int originModelId, int originBulletModelId)
@@ -313,6 +313,11 @@ void EnemyBase::UpdateMoving(void)
 
 void EnemyBase::UpdateAttack(void)
 {
+	// アニメーションをループ
+	if (nowAnimTime_ >= totalAnimTime_)
+	{
+		ChangeState(STATE::MOVING);
+	}
 }
 
 void EnemyBase::DrawMoving(void)

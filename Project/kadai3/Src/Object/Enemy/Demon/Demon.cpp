@@ -15,4 +15,5 @@ void Demon::SetParam(void)
 	spawnRange_ = 1.0f;
 	scale_ = { 0.5f,0.5f,0.5f };
 	speed_ = 5.0f;
+	attackCount_ = 0;
 }
