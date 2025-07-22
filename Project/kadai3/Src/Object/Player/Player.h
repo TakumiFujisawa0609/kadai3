@@ -4,6 +4,18 @@
 class Player
 {
 public:
+	// 状態
+	enum class STATE
+	{
+		NONE,
+		MOVE,
+		KNOCKBACK,
+		ATTACK,
+		DEAD,
+		END,
+		VICTORY,
+	};
+
 	// アニメーション種別
 	enum class ANIM_TYPE
 	{
@@ -62,7 +74,37 @@ private:
 	// アニメーション再生
 	void UpdateAnim(void);
 
+	// 状態遷移
+	void ChangeState(STATE state);
+
+	// 状態別遷移
+	void ChangeMove(void);
+	void ChangeKnockback(void);
+	void ChangeAttack(void);
+	void ChangeDead(void);
+	void ChangeEnd(void);
+	void ChangeVictory(void);
+
+	// 状態別更新
+	void UpdateMove(void);
+	void UpdateKnockback(void);
+	void UpdateAttack(void);
+	void UpdateDead(void);
+	void UpdateEnd(void);
+	void UpdateVictory(void);
+
+	// 状態別描画
+	void DrawMove(void);
+	void DrawKnockback(void);
+	void DrawAttack(void);
+	void DrawDead(void);
+	void DrawEnd(void);
+	void DrawVictory(void);
+
 private:
+
+	// 状態
+	STATE state_;
 		
 	int modelId_;	// モデルのハンドルID
 	VECTOR pos_;	// 座標

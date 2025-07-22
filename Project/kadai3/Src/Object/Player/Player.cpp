@@ -37,6 +37,9 @@ void Player::Init(void)
 	attachNo_ = 0;
 	nowAnimTime_ = 0.0f;
 	totalAnimTime_ = 0.0f;
+
+	// 初期状態
+	ChangeState(STATE::MOVE);
 }
 
 void Player::Load(void)
@@ -60,11 +63,30 @@ void Player::LoadEnd(void)
 
 void Player::Update(void)
 {
-	// 移動操作
-	ProcessMove();
+	switch (state_)
+	{
+	case Player::STATE::NONE:
+		break;
+	case Player::STATE::MOVE:
+		UpdateMove();
+		break;
+	case Player::STATE::KNOCKBACK:
+		UpdateKnockback();
+		break;
+	case Player::STATE::ATTACK:
+		UpdateAttack();
+		break;
+	case Player::STATE::DEAD:
+		UpdateDead();
+		break;
+	case Player::STATE::END:
+		UpdateEnd();
+		break;
+	case Player::STATE::VICTORY:
+		UpdateVictory();
+		break;
+	}
 
-	// ジャンプ操作
-	ProcessJump();
 
 	// アニメーションの更新
 	UpdateAnim();
@@ -75,8 +97,32 @@ void Player::Update(void)
 
 void Player::Draw(void)
 {
-	// モデルの描画
-	MV1DrawModel(modelId_);
+
+	switch (state_)
+	{
+	case Player::STATE::NONE:
+		break;
+	case Player::STATE::MOVE:
+		DrawMove();
+		break;
+	case Player::STATE::KNOCKBACK:
+		DrawKnockback();
+		break;
+	case Player::STATE::ATTACK:
+		DrawAttack();
+		break;
+	case Player::STATE::DEAD:
+		DrawDead();
+		break;
+	case Player::STATE::END:
+		DrawEnd();
+		break;
+	case Player::STATE::VICTORY:
+		DrawVictory();
+		break;
+	default:
+		break;
+	}
 }
 
 void Player::Release(void)
@@ -207,4 +253,124 @@ void Player::UpdateAnim(void)
 
 	// アニメーション設定
 	MV1SetAttachAnimTime(modelId_, attachNo_, nowAnimTime_);
+}
+
+void Player::ChangeState(STATE state)
+{
+	state_ = state;
+
+	switch (state)
+	{
+	case Player::STATE::NONE:
+		break;
+	case Player::STATE::MOVE:
+		ChangeMove();
+		break;
+	case Player::STATE::KNOCKBACK:
+		ChangeKnockback();
+		break;
+	case Player::STATE::ATTACK:
+		ChangeAttack();
+		break;
+	case Player::STATE::DEAD:
+		ChangeDead();
+		break;
+	case Player::STATE::END:
+		ChangeEnd();
+		break;
+	case Player::STATE::VICTORY:
+		ChangeVictory();
+		break;
+	default:
+		break;
+	}
+}
+
+void Player::ChangeMove(void)
+{
+}
+
+void Player::ChangeKnockback(void)
+{
+}
+
+void Player::ChangeAttack(void)
+{
+}
+
+void Player::ChangeDead(void)
+{
+}
+
+void Player::ChangeEnd(void)
+{
+}
+
+void Player::ChangeVictory(void)
+{
+}
+
+void Player::UpdateMove(void)
+{
+	// 移動操作
+	ProcessMove();
+
+	// ジャンプ
+	ProcessJump();
+}
+
+void Player::UpdateKnockback(void)
+{
+}
+
+void Player::UpdateAttack(void)
+{
+}
+
+void Player::UpdateDead(void)
+{
+}
+
+void Player::UpdateEnd(void)
+{
+}
+
+void Player::UpdateVictory(void)
+{
+}
+
+void Player::DrawMove(void)
+{
+	// モデルの描画
+	MV1DrawModel(modelId_);
+}
+
+void Player::DrawKnockback(void)
+{
+	// モデルの描画
+	MV1DrawModel(modelId_);
+}
+
+void Player::DrawAttack(void)
+{
+	// モデルの描画
+	MV1DrawModel(modelId_);
+}
+
+void Player::DrawDead(void)
+{
+	// モデルの描画
+	MV1DrawModel(modelId_);
+}
+
+void Player::DrawEnd(void)
+{
+	// モデルの描画
+	MV1DrawModel(modelId_);
+}
+
+void Player::DrawVictory(void)
+{
+	// モデルの描画
+	MV1DrawModel(modelId_);
 }
