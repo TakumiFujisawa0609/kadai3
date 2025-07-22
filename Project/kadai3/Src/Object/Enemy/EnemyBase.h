@@ -80,6 +80,15 @@ public:
 	// 状態遷移
 	void ChangeState(STATE state);
 
+	// 全部の弾を取得
+	std::vector<BulletBase*> GetBullets(void);
+
+	// 座標を取得
+	VECTOR GetPos(void);
+
+	// 当たり判定の半径を取得
+	float GetCollRadius(void);
+
 protected:
 	// プレイヤーの方向を向く
 	void LookPlayer(void);

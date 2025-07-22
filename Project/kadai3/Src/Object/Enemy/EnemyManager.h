@@ -27,6 +27,9 @@ public:
 	void Draw(void);		// 描画
 	void Release(void);		// 解放
 
+	// 全ての敵を取得
+	std::vector<EnemyBase*> GetEnemys(void);
+
 private:
 	// エネミー用のモデルハンドルID
 	int originModelId_[static_cast<int>(EnemyBase::TYPE::MAX)];

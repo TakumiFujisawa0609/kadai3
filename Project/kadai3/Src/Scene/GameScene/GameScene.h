@@ -33,6 +33,9 @@ private:
 	// ステージとプレイヤーの衝突判定
 	void CollisionStage(void);
 
+	// エネミーとプレイヤーの衝突判定
+	void CollisionEnemy(void);
+
 private:
 	Grid* grid_;		// グリッドクラス(デバッグ用)
 

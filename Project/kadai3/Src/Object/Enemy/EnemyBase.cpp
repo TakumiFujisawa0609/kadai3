@@ -349,3 +349,18 @@ void EnemyBase::DrawBullet(void)
 		bullet->Draw();
 	}
 }
+
+std::vector<BulletBase*> EnemyBase::GetBullets(void)
+{
+	return bullets_;
+}
+
+VECTOR EnemyBase::GetPos(void)
+{
+	return pos_;
+}
+
+float EnemyBase::GetCollRadius(void)
+{
+	return collRadius_;
+}

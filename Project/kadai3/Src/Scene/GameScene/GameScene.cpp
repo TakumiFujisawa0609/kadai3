@@ -5,6 +5,8 @@
 #include "../../Object/Stage/Stage.h"
 #include "../../Object/Player/Player.h"
 #include "../../Object/Enemy/EnemyManager.h"
+#include "../../Utility/AsoUtility.h"
+
 
 // コンストラクタ
 GameScene::GameScene()
@@ -149,6 +151,9 @@ void GameScene::Collision(void)
 {
 	// ステージブロックとプレイヤーの衝突
 	CollisionStage();
+
+	// エネミーとプレイヤーの衝突
+	CollisionEnemy();
 }
 
 void GameScene::CollisionStage(void)
@@ -172,5 +177,55 @@ void GameScene::CollisionStage(void)
 	{
 		// プレイヤーに衝突座標を渡す
 		player_->CollisionStage(result.HitPosition);
+	}
+}
+
+void GameScene::CollisionEnemy(void)
+{
+	// プレイヤーの座標
+	VECTOR playerPos = player_->GetPos();
+
+	// 敵の情報を取得
+	std::vector<EnemyBase*> enemys = enemyManager_->GetEnemys();
+
+	// 敵を全て検索
+	for (EnemyBase* enemy : enemys)
+	{
+		// 敵の座標
+		VECTOR enemyPos = enemy->GetPos();
+
+		// 敵とプレイヤーの衝突判定(球体)
+		if (AsoUtility::IsHitSpheres(
+			playerPos,
+			Player::COLL_RADIUS,
+			enemyPos,
+			enemy->GetCollRadius()
+		))
+		{
+			// テスト
+			int a = 0;
+		}
+
+		// 弾を取得
+		std::vector<BulletBase*> bullets = enemy->GetBullets();
+
+		// 全ての弾を検索
+		for (BulletBase* bullet : bullets)
+		{
+			// 弾の座標
+			VECTOR bulletPos = bullet->GetPos();
+
+			// 敵の弾とプレイヤーの衝突判定(球体)
+			if (AsoUtility::IsHitSpheres(
+				playerPos,
+				Player::COLL_RADIUS,
+				bulletPos,
+				bullet->GetCollisionRadius()
+			))
+			{
+				// テスト
+				int b = 0;
+			}
+		}
 	}
 }

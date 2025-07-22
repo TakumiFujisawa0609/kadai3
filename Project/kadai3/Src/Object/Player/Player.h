@@ -30,6 +30,9 @@ public:
 	// 地面衝突判定用の線分の長さ
 	static constexpr float COLL_LEN = 10.0f;
 
+	// 当たり判定の半径
+	static constexpr float COLL_RADIUS = 50.0f;
+
 	// コンストラクタ
 	Player(void);
 

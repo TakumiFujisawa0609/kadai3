@@ -151,3 +151,8 @@ void EnemyManager::Release(void)
 		enemy->Release();
 	}
 }
+
+std::vector<EnemyBase*> EnemyManager::GetEnemys(void)
+{
+	return enemys_;
+}
