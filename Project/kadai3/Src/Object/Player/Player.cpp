@@ -311,6 +311,8 @@ void Player::ChangeState(STATE state)
 
 void Player::ChangeMove(void)
 {
+	// 拡散光を標準値に戻す
+	MV1SetMaterialDifColor(modelId_, 0, DIF_COLOR_DEF);
 }
 
 void Player::ChangeKnockback(void)
@@ -393,6 +395,16 @@ void Player::DrawMove(void)
 
 void Player::DrawKnockback(void)
 {
+	// モデルの点滅処理
+	if (knockBackCount_ % BLINK_INTERVAL == 0)
+	{
+		MV1SetMaterialDifColor(modelId_, 0, DIF_COLOR_DEF);
+	}
+	else
+	{
+		MV1SetMaterialDifColor(modelId_, 0, DIF_COLOR_BLINK);
+	}
+
 	// モデルの描画
 	MV1DrawModel(modelId_);
 }

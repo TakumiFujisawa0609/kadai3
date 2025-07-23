@@ -55,6 +55,16 @@ public:
 	// リスポーン判定距離
 	static constexpr float RESPAWN_DIS = -1500.0f;
 
+	// 標準の拡散光色
+	static constexpr COLOR_F DIF_COLOR_DEF = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+	// 点滅時の拡散光色
+	static constexpr COLOR_F DIF_COLOR_BLINK = { 1.0f, 0.5f, 0.5f, 1.0f };
+
+	// 点滅間隔
+	static constexpr int BLINK_INTERVAL = 8;
+
+
 	// コンストラクタ
 	Player(void);
 
