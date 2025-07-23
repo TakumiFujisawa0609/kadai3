@@ -21,6 +21,7 @@ public:
 	{
 		DEAD = 0,	// 死亡
 		IDEL = 3,	// 待機
+		JUMP = 6,	// ジャンプ
 		WALK = 14,	// 歩き
 	};
 
@@ -45,6 +46,15 @@ public:
 	// 当たり判定の半径
 	static constexpr float COLL_RADIUS = 50.0f;
 
+	// ノックバックのスピード
+	static constexpr float KNOCKBACK_SPEED = 10.0f;
+
+	// ジャンプ力
+	static constexpr float JUMP_POW = 20.0f;
+
+	// リスポーン判定距離
+	static constexpr float RESPAWN_DIS = -1500.0f;
+
 	// コンストラクタ
 	Player(void);
 
@@ -63,6 +73,9 @@ public:
 
 	// 衝突判定
 	void CollisionStage(VECTOR pos);
+
+	// 指定の方向にノックバックする
+	void KnockBack(VECTOR dirXZ, float jumpPow);
 
 private:
 	// 移動制御
@@ -111,6 +124,13 @@ private:
 	VECTOR angle_;	// 向き
 	VECTOR scale_;	// 大きさ
 	float jumpPow_;	// ジャンプ力
+	bool isJump_;	// ジャンプ判定
+
+	// ノックバック方向
+	VECTOR knockBackDir_;
+
+	// ノックバックカウンタ(点滅用)
+	int knockBackCount_;
 
 	// アニメーション
 	ANIM_TYPE prevAnimType_;	// 前回のアニメーション種別

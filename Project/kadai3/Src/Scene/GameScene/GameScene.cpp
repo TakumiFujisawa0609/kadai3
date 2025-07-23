@@ -191,6 +191,10 @@ void GameScene::CollisionEnemy(void)
 	// 敵を全て検索
 	for (EnemyBase* enemy : enemys)
 	{
+		// 敵が生存していないなら無視する
+		if (!enemy->GetIsAlive())
+			continue;
+
 		// 敵の座標
 		VECTOR enemyPos = enemy->GetPos();
 
@@ -202,8 +206,12 @@ void GameScene::CollisionEnemy(void)
 			enemy->GetCollRadius()
 		))
 		{
-			// テスト
-			int a = 0;
+			// ノックバックするXZ方向を求める
+			VECTOR diff = VSub(playerPos, enemyPos);
+			diff.y = 0.0f;
+			VECTOR dir = VNorm(diff);
+			// プレイヤーをノックバックさせる
+			player_->KnockBack(dir, 20.0f);
 		}
 
 		// 弾を取得
@@ -223,8 +231,12 @@ void GameScene::CollisionEnemy(void)
 				bullet->GetCollisionRadius()
 			))
 			{
-				// テスト
-				int b = 0;
+				// ノックバックするXZ方向を求める
+				VECTOR diff = VSub(playerPos, bulletPos);
+				diff.y = 0.0f;
+				VECTOR dir = VNorm(diff);
+				// プレイヤーをノックバックさせる
+				player_->KnockBack(dir, 20.0f);
 			}
 		}
 	}

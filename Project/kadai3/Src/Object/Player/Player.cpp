@@ -31,6 +31,9 @@ void Player::Init(void)
 	// ジャンプ力の初期化
 	jumpPow_ = 0.0f;
 
+	// ジャンプフラグの初期化
+	isJump_ = false;
+
 	// アニメーション
 	prevAnimType_ = ANIM_TYPE::IDEL;
 	nowAnimType_ = ANIM_TYPE::IDEL;
@@ -87,6 +90,12 @@ void Player::Update(void)
 		break;
 	}
 
+	// 衝突判定前の落下制御
+	if (pos_.y < RESPAWN_DIS)
+	{
+		// 初期化
+		Init();
+	}
 
 	// アニメーションの更新
 	UpdateAnim();
@@ -141,6 +150,17 @@ void Player::CollisionStage(VECTOR pos)
 	// 衝突した位置
 	pos_ = pos;
 	jumpPow_ = 0.0f;
+	isJump_ = false;
+}
+
+void Player::KnockBack(VECTOR dirXZ, float jumpPow)
+{
+	// 引数をメンバ変数に格納
+	knockBackDir_ = dirXZ;
+	jumpPow_ = jumpPow;
+
+	// ノックバックに状態遷移
+	ChangeState(STATE::KNOCKBACK);
 }
 
 void Player::ProcessMove(void)
@@ -207,15 +227,18 @@ void Player::ProcessJump(void)
 	// 重力
 	jumpPow_ -= GRAVITY;
 
+	// ジャンプ
+	if (InputManager::GetInstance()->IsTrgDown(KEY_INPUT_SPACE) && !isJump_)
+	{
+		isJump_ = true;
+		jumpPow_ = JUMP_POW;
+
+		// ジャンプアニメーション再生
+		nowAnimType_ = ANIM_TYPE::JUMP;
+	}
+
 	// プレイヤーの座標にジャンプ力を加算する
 	pos_.y += jumpPow_;
-
-	// 衝突判定前の落下制御
-	if (pos_.y < -1000.0f)
-	{
-		// 初期化
-		Init();
-	}
 
 	// モデルに座標を設定する
 	MV1SetPosition(modelId_, pos_);
@@ -292,6 +315,11 @@ void Player::ChangeMove(void)
 
 void Player::ChangeKnockback(void)
 {
+	// ジャンプ判定にする
+	isJump_ = true;
+
+	// ノックバックカウンタリセット
+	knockBackCount_ = 0;
 }
 
 void Player::ChangeAttack(void)
@@ -321,6 +349,24 @@ void Player::UpdateMove(void)
 
 void Player::UpdateKnockback(void)
 {
+	// 着地したら通常状態に戻す
+	if (!isJump_)
+	{
+		ChangeState(STATE::MOVE);
+		return;
+	}
+
+	knockBackCount_++;
+
+	// ジャンプする
+	jumpPow_ -= GRAVITY;
+
+	pos_.y += jumpPow_;
+
+	// ノックバック方向に移動させる
+	pos_ = VAdd(pos_, VScale(knockBackDir_, KNOCKBACK_SPEED));
+	MV1SetPosition(modelId_, pos_);
+
 }
 
 void Player::UpdateAttack(void)
