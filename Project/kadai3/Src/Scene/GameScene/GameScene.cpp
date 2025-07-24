@@ -154,6 +154,9 @@ void GameScene::Collision(void)
 
 	// エネミーとプレイヤーの衝突
 	CollisionEnemy();
+
+	// エネミーとプレイヤーの攻撃の衝突
+	CollisionAttack();
 }
 
 void GameScene::CollisionStage(void)
@@ -238,6 +241,39 @@ void GameScene::CollisionEnemy(void)
 				// プレイヤーをノックバックさせる
 				player_->KnockBack(dir, 20.0f);
 			}
+		}
+	}
+}
+
+void GameScene::CollisionAttack(void)
+{
+	// プレイヤーが攻撃状態でないなら処理しない
+	if (player_->GetState() != Player::STATE::ATTACK)
+		return;
+
+	// 敵の情報を取得
+	auto enemys = enemyManager_->GetEnemys();
+
+	// 敵を全て検索
+	for (auto enemy : enemys)
+	{
+		// 敵が生存していないなら無視する
+		if (!enemy->GetIsAlive())
+			continue;
+
+		// 敵の座標を取得
+		VECTOR enemyPos = enemy->GetPos();
+
+		// 衝突判定(球体)
+		if (AsoUtility::IsHitSpheres(
+			player_->GetAttackPos(),
+			Player::ATTACK_RADIUS,
+			enemyPos,
+			enemy->GetCollRadius())
+			)
+		{
+			// エネミーにダメージを与える
+			enemy->SetIsAlive(false);
 		}
 	}
 }

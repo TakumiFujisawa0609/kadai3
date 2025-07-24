@@ -35,8 +35,8 @@ void Player::Init(void)
 	isJump_ = false;
 
 	// アニメーション
-	prevAnimType_ = ANIM_TYPE::IDEL;
-	nowAnimType_ = ANIM_TYPE::IDEL;
+	prevAnimType_ = ANIM_TYPE::IDLE;
+	nowAnimType_ = ANIM_TYPE::IDLE;
 	attachNo_ = 0;
 	nowAnimTime_ = 0.0f;
 	totalAnimTime_ = 0.0f;
@@ -140,9 +140,19 @@ void Player::Release(void)
 	MV1DeleteModel(modelId_);
 }
 
+Player::STATE Player::GetState(void)
+{
+	return state_;
+}
+
 VECTOR Player::GetPos(void)
 {
 	return pos_;
+}
+
+VECTOR Player::GetAttackPos(void)
+{
+	return attackPos_;
 }
 
 void Player::CollisionStage(VECTOR pos)
@@ -192,6 +202,9 @@ void Player::ProcessMove(void)
 	// 移動していたら
 	if (!AsoUtility::EqualsVZero(moveDir))
 	{
+		// 移動方向を保存
+		moveDir_ = moveDir;
+
 		// モデルの移動方向にY軸回転させる
 		// 方向を角度(ラジアン)に変換する
 		angle_.y = atan2(moveDir.x, moveDir.z);
@@ -218,7 +231,7 @@ void Player::ProcessMove(void)
 	else
 	{
 		// アニメーションを変更する
-		nowAnimType_ = ANIM_TYPE::IDEL;
+		nowAnimType_ = ANIM_TYPE::IDLE;
 	}
 }
 
@@ -242,6 +255,15 @@ void Player::ProcessJump(void)
 
 	// モデルに座標を設定する
 	MV1SetPosition(modelId_, pos_);
+}
+
+void Player::ProcessAttack(void)
+{
+	// 攻撃判定
+	if (InputManager::GetInstance()->IsTrgMouseLeft() && !isJump_)
+	{
+		ChangeState(STATE::ATTACK);
+	}
 }
 
 void Player::UpdateAnim(void)
@@ -326,6 +348,11 @@ void Player::ChangeKnockback(void)
 
 void Player::ChangeAttack(void)
 {
+	// 攻撃アニメーション
+	nowAnimType_ = ANIM_TYPE::PUNCH;
+
+	// プレイヤーの座標を攻撃座標にセット
+	attackPos_ = pos_;
 }
 
 void Player::ChangeDead(void)
@@ -347,6 +374,9 @@ void Player::UpdateMove(void)
 
 	// ジャンプ
 	ProcessJump();
+
+	// 攻撃
+	ProcessAttack();
 }
 
 void Player::UpdateKnockback(void)
@@ -373,6 +403,14 @@ void Player::UpdateKnockback(void)
 
 void Player::UpdateAttack(void)
 {
+	// 攻撃が終わったら
+	if (nowAnimTime_ >= totalAnimTime_)
+	{
+		ChangeState(STATE::MOVE);
+	}
+
+	// 攻撃判定の移動処理
+	attackPos_ = VAdd(attackPos_, VScale(moveDir_, 10.0f));
 }
 
 void Player::UpdateDead(void)
@@ -413,6 +451,16 @@ void Player::DrawAttack(void)
 {
 	// モデルの描画
 	MV1DrawModel(modelId_);
+
+	// 当たり判定
+	DrawSphere3D(
+		attackPos_,
+		ATTACK_RADIUS,
+		16,
+		0xff0000,
+		0xff0000,
+		true
+	);
 }
 
 void Player::DrawDead(void)

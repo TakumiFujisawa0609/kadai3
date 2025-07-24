@@ -19,10 +19,25 @@ public:
 	// アニメーション種別
 	enum class ANIM_TYPE
 	{
-		DEAD = 0,	// 死亡
-		IDEL = 3,	// 待機
-		JUMP = 6,	// ジャンプ
-		WALK = 14,	// 歩き
+		DEAD,			// 死亡
+		DUCK,
+		HIT_REACT,
+		IDLE,			// 待機
+		IDLE_ATTACK,
+		IDLE_HOLD,
+		JUMP,			// ジャンプ
+		JUMP_IDLE,
+		JUMP_LAND,
+		NO,
+		PUNCH,
+		RUN,
+		RUN_ATTACK,
+		RUN_HOLD,
+		WALK,			// 歩き
+		WALK_HOLD,
+		WAVE,
+		YES,
+		MAX,
 	};
 
 public:
@@ -64,6 +79,8 @@ public:
 	// 点滅間隔
 	static constexpr int BLINK_INTERVAL = 8;
 
+	// 攻撃の当たり判定の半径
+	static constexpr float ATTACK_RADIUS = 100.0f;
 
 	// コンストラクタ
 	Player(void);
@@ -78,8 +95,14 @@ public:
 	void Draw(void);
 	void Release(void);
 
+	// 状態の取得
+	STATE GetState(void);
+
 	// 座標の取得
 	VECTOR GetPos(void);
+
+	// 攻撃座標の取得
+	VECTOR GetAttackPos(void);
 
 	// 衝突判定
 	void CollisionStage(VECTOR pos);
@@ -93,6 +116,9 @@ private:
 
 	// ジャンプ制御
 	void ProcessJump(void);
+
+	// 攻撃制御
+	void ProcessAttack(void);
 
 	// アニメーション再生
 	void UpdateAnim(void);
@@ -135,6 +161,10 @@ private:
 	VECTOR scale_;	// 大きさ
 	float jumpPow_;	// ジャンプ力
 	bool isJump_;	// ジャンプ判定
+	VECTOR moveDir_;// 移動方向
+
+	// 攻撃座標
+	VECTOR attackPos_;
 
 	// ノックバック方向
 	VECTOR knockBackDir_;

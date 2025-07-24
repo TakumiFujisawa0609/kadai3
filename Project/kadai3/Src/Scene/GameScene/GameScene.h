@@ -36,6 +36,9 @@ private:
 	// エネミーとプレイヤーの衝突判定
 	void CollisionEnemy(void);
 
+	// エネミーとプレイヤーの攻撃の衝突判定
+	void CollisionAttack(void);
+
 private:
 	Grid* grid_;		// グリッドクラス(デバッグ用)
 
